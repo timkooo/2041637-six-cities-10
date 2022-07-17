@@ -1,10 +1,9 @@
 import { FC } from 'react';
-import { PlaceCardFavorite } from '../../components/place-card-favorite/place-card-favorite';
-import type { place } from '../../types/place';
-import type { places } from '../../types/places';
+import { PlaceCard } from '../../components/place-card/place-card';
+import type { Hotel } from '../../types/hotel';
 
 type FavoritesProps = {
-  places: places;
+  places: Hotel[];
 };
 
 export const Favorites: FC<FavoritesProps> = ({ places }) => (
@@ -62,8 +61,16 @@ export const Favorites: FC<FavoritesProps> = ({ places }) => (
                 </div>
               </div>
               <div className="favorites__places">
-                {places.map((place: place) => (
-                  <PlaceCardFavorite place={place} key={place.id} />
+                {places.map((place: Hotel) => (
+                  <PlaceCard
+                    place={place}
+                    key={place.id}
+                    htmlClasses={{
+                      rootPlaceCardClass: 'favorites__card',
+                      imageWrapperClass: 'favorites__image-wrapper',
+                      placeCardInfoClass: 'favorites__card-info',
+                    }}
+                  />
                 ))}
               </div>
             </li>

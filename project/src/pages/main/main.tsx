@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { Places } from '../../components/places/places';
-import type { reviews } from '../../types/reviews';
-import type { places } from '../../types/places';
+import type { Comment } from '../../types/comment';
+import type { Hotel } from '../../types/hotel';
 
 type MainProps = {
-  places: places;
-  reviews: reviews;
+  places: Hotel[];
+  reviews?: Comment[];
 };
 
 export const Main: FC<MainProps> = ({places, reviews}) => (
@@ -89,7 +89,7 @@ export const Main: FC<MainProps> = ({places, reviews}) => (
       </div>
       <div className="cities">
         <div className="cities__places-container container">
-          <Places places={places} reviews={reviews}/>
+          <Places places={places} />
           <div className="cities__right-section">
             <section className="cities__map map"></section>
           </div>
