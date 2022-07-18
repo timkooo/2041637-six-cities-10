@@ -40,9 +40,7 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
 
   return (
     <article className={`${rootPlaceCardClass} place-card`} onMouseOver={handleOnMouseOver} onMouseLeave={handleOnMouseLeave}>
-      {!place.isPremium ? (
-        ''
-      ) : (
+      {place.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
