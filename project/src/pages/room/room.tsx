@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { CommentsForm } from '../../components/comments-form/comments-form';
 import { AppRoutes } from '../../const';
 import { Hotel } from '../../types/hotel';
@@ -14,8 +14,11 @@ export const Room: FC<RoomProps> = ({ places }) => {
   const currentPlace = places.find(
     (place) => place.id.toString() === params.id
   );
-  let rating;
-  currentPlace ? (rating = getRating(currentPlace.rating)) : (rating = '0%');
+  const rating = currentPlace ? getRating(currentPlace.rating) : '0%';
+
+  if (!currentPlace) {
+    return <Navigate to="/*"/>;
+  }
 
   return (
     <div className="page">
@@ -54,144 +57,140 @@ export const Room: FC<RoomProps> = ({ places }) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {currentPlace &&
-                currentPlace.images.map((image) => (
-                  <div key={image} className="property__image-wrapper">
-                    <img
-                      className={image}
-                      src="img/room.jpg"
-                      alt="Photo studio"
-                    />
-                  </div>
-                ))}
+              {currentPlace.images.map((image) => (
+                <div key={image} className="property__image-wrapper">
+                  <img
+                    className="property__image"
+                    src={image}
+                    alt="Photo studio"
+                  />
+                </div>
+              ))}
             </div>
           </div>
-          {currentPlace && (
-            <div className="property__container container">
-              <div className="property__wrapper">
-                {!currentPlace.isPremium ? (
-                  ''
-                ) : (
-                  <div className="property__mark">
-                    <span>Premium</span>
-                  </div>
-                )}
-                <div className="property__name-wrapper">
-                  <h1 className="property__name">{currentPlace.description}</h1>
-                  <button
-                    className={`property__bookmark-button ${ currentPlace.isFavorite && ('property__bookmark-button--active')} button`}
-                    type="button"
+
+          <div className="property__container container">
+            <div className="property__wrapper">
+              <div className="property__mark">
+                <span>Premium</span>
+              </div>
+              <div className="property__name-wrapper">
+                <h1 className="property__name">{currentPlace.description}</h1>
+                <button
+                  className={`property__bookmark-button ${
+                    currentPlace.isFavorite ? 'property__bookmark-button--active' : ''
+                  } button`}
+                  type="button"
+                >
+                  <svg
+                    className="property__bookmark-icon"
+                    width="31"
+                    height="33"
                   >
-                    <svg
-                      className="property__bookmark-icon"
-                      width="31"
-                      height="33"
-                    >
-                      <use xlinkHref="#icon-bookmark"></use>
-                    </svg>
-                    <span className="visually-hidden">To bookmarks</span>
-                  </button>
+                    <use xlinkHref="#icon-bookmark"></use>
+                  </svg>
+                  <span className="visually-hidden">To bookmarks</span>
+                </button>
+              </div>
+              <div className="property__rating rating">
+                <div className="property__stars rating__stars">
+                  <span style={{ width: rating }}></span>
+                  <span className="visually-hidden">Rating</span>
                 </div>
-                <div className="property__rating rating">
-                  <div className="property__stars rating__stars">
-                    <span style={{ width: rating }}></span>
-                    <span className="visually-hidden">Rating</span>
+                <span className="property__rating-value rating__value">
+                  {currentPlace.rating}
+                </span>
+              </div>
+              <ul className="property__features">
+                <li className="property__feature property__feature--entire">
+                  {currentPlace.type}
+                </li>
+                <li className="property__feature property__feature--bedrooms">
+                  {currentPlace.bedrooms} Bedrooms
+                </li>
+                <li className="property__feature property__feature--adults">
+                  {currentPlace.maxAdults}
+                </li>
+              </ul>
+              <div className="property__price">
+                <b className="property__price-value">
+                  &euro;{currentPlace.price}
+                </b>
+                <span className="property__price-text">&nbsp;night</span>
+              </div>
+              <div className="property__inside">
+                <h2 className="property__inside-title">What&apos;s inside</h2>
+                <ul className="property__inside-list">
+                  {currentPlace.goods.map((item) => (
+                    <li key={item} className="property__inside-item">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="property__host">
+                <h2 className="property__host-title">Meet the host</h2>
+                <div className="property__host-user user">
+                  <div className={`property__avatar-wrapper ${currentPlace.host.isPro && 'property__avatar-wrapper--pro'} user__avatar-wrapper`}>
+                    <img
+                      className="property__avatar user__avatar"
+                      src={currentPlace.host.avatarUrl}
+                      width="74"
+                      height="74"
+                      alt="Host avatar"
+                    />
                   </div>
-                  <span className="property__rating-value rating__value">
-                    {currentPlace.rating}
+                  <span className="property__user-name">
+                    {currentPlace.host.name}
+                  </span>
+                  <span className="property__user-status">
+                    {currentPlace.host.isPro}
                   </span>
                 </div>
-                <ul className="property__features">
-                  <li className="property__feature property__feature--entire">
-                    {currentPlace.type}
-                  </li>
-                  <li className="property__feature property__feature--bedrooms">
-                    {currentPlace.bedrooms} Bedrooms
-                  </li>
-                  <li className="property__feature property__feature--adults">
-                    {currentPlace.maxAdults}
+                <div className="property__description">
+                  <p className="property__text">{currentPlace.description}</p>
+                </div>
+              </div>
+              <section className="property__reviews reviews">
+                <h2 className="reviews__title">
+                  Reviews &middot; <span className="reviews__amount">1</span>
+                </h2>
+                <ul className="reviews__list">
+                  <li className="reviews__item">
+                    <div className="reviews__user user">
+                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
+                        <img
+                          className="reviews__avatar user__avatar"
+                          src="img/avatar-max.jpg"
+                          width="54"
+                          height="54"
+                          alt="Reviews avatar"
+                        />
+                      </div>
+                      <span className="reviews__user-name">Max</span>
+                    </div>
+                    <div className="reviews__info">
+                      <div className="reviews__rating rating">
+                        <div className="reviews__stars rating__stars">
+                          <span style={{ width: '80%' }}></span>
+                          <span className="visually-hidden">Rating</span>
+                        </div>
+                      </div>
+                      <p className="reviews__text">
+                        A quiet cozy and picturesque that hides behind a a river
+                        by the unique lightness of Amsterdam. The building is
+                        green and from 18th century.
+                      </p>
+                      <time className="reviews__time" dateTime="2019-04-24">
+                        April 2019
+                      </time>
+                    </div>
                   </li>
                 </ul>
-                <div className="property__price">
-                  <b className="property__price-value">
-                    &euro;{currentPlace.price}
-                  </b>
-                  <span className="property__price-text">&nbsp;night</span>
-                </div>
-                <div className="property__inside">
-                  <h2 className="property__inside-title">What&apos;s inside</h2>
-                  <ul className="property__inside-list">
-                    {currentPlace.goods.map((item) => (
-                      <li key={item} className="property__inside-item">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="property__host">
-                  <h2 className="property__host-title">Meet the host</h2>
-                  <div className="property__host-user user">
-                    <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                      <img
-                        className="property__avatar user__avatar"
-                        src={currentPlace.host.avatarUrl}
-                        width="74"
-                        height="74"
-                        alt="Host avatar"
-                      />
-                    </div>
-                    <span className="property__user-name">
-                      {currentPlace.host.name}
-                    </span>
-                    <span className="property__user-status">
-                      {currentPlace.host.isPro}
-                    </span>
-                  </div>
-                  <div className="property__description">
-                    <p className="property__text">{currentPlace.description}</p>
-                  </div>
-                </div>
-                <section className="property__reviews reviews">
-                  <h2 className="reviews__title">
-                    Reviews &middot; <span className="reviews__amount">1</span>
-                  </h2>
-                  <ul className="reviews__list">
-                    <li className="reviews__item">
-                      <div className="reviews__user user">
-                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img
-                            className="reviews__avatar user__avatar"
-                            src="img/avatar-max.jpg"
-                            width="54"
-                            height="54"
-                            alt="Reviews avatar"
-                          />
-                        </div>
-                        <span className="reviews__user-name">Max</span>
-                      </div>
-                      <div className="reviews__info">
-                        <div className="reviews__rating rating">
-                          <div className="reviews__stars rating__stars">
-                            <span style={{ width: '80%' }}></span>
-                            <span className="visually-hidden">Rating</span>
-                          </div>
-                        </div>
-                        <p className="reviews__text">
-                          A quiet cozy and picturesque that hides behind a a
-                          river by the unique lightness of Amsterdam. The
-                          building is green and from 18th century.
-                        </p>
-                        <time className="reviews__time" dateTime="2019-04-24">
-                          April 2019
-                        </time>
-                      </div>
-                    </li>
-                  </ul>
-                  <CommentsForm />
-                </section>
-              </div>
+                <CommentsForm />
+              </section>
             </div>
-          )}
+          </div>
           <section className="property__map map"></section>
         </section>
         <div className="container">

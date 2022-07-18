@@ -1,5 +1,5 @@
 import { Hotel } from '../../types/hotel';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { PlaceCard } from '../place-card/place-card';
 import React from 'react';
 
@@ -8,14 +8,9 @@ type PlacesProps = {
 };
 
 export const Places: FC<PlacesProps> = ({ places }) => {
+  const [, setHoveredHotelCard] = useState<number | null>(null);
 
-  const [cardOnFocus, setCardOnFocus] = React.useState(0);
-
-  const settCardOnFocus = (cardId: number) => {
-    setCardOnFocus(cardId);
-    // eslint-disable-next-line no-console
-    console.log(cardOnFocus);
-  };
+  const handleHotelCardMouseLeave = () => setHoveredHotelCard(null);
 
   return (
     <section className="cities__places places">
@@ -47,7 +42,8 @@ export const Places: FC<PlacesProps> = ({ places }) => {
       <div className="cities__places-list places__list tabs__content">
         {places.map((place: Hotel) => (
           <PlaceCard
-            callBack={settCardOnFocus}
+            onMouseOver={setHoveredHotelCard}
+            onMouseLeave={handleHotelCardMouseLeave}
             place={place}
             key={place.id}
             htmlClasses={{

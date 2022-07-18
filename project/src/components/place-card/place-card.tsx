@@ -10,12 +10,14 @@ type PlaceCardProps = {
     rootPlaceCardClass?: string;
     placeCardInfoClass?: string;
   }
-  callBack?: (id: number) => void;
+  onMouseOver?: (id: number) => void;
+  onMouseLeave?: (id: number) => void;
 };
 
 export const PlaceCard: FC<PlaceCardProps> = (props) => {
   const {
-    callBack,
+    onMouseOver,
+    onMouseLeave,
     place,
     htmlClasses,
   } = props;
@@ -28,12 +30,16 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
 
   const rating = getRating(place.rating);
 
-  const onMouseOverHandler = () => {
-    callBack?.(place.id);
+  const handleOnMouseOver = () => {
+    onMouseOver?.(place.id);
+  };
+
+  const handleOnMouseLeave = () => {
+    onMouseLeave?.(place.id);
   };
 
   return (
-    <article className={`${rootPlaceCardClass} place-card`} onMouseOver={onMouseOverHandler}>
+    <article className={`${rootPlaceCardClass} place-card`} onMouseOver={handleOnMouseOver} onMouseLeave={handleOnMouseLeave}>
       {!place.isPremium ? (
         ''
       ) : (

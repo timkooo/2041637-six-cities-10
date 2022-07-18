@@ -14,12 +14,12 @@ export const CommentsForm = () => {
     review: '',
   });
 
-  const ratingChangeHanlder = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputRaiting = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const reviewChangeHanlder = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInputReview = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = evt.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -41,7 +41,7 @@ export const CommentsForm = () => {
               value={stars}
               id={`${stars}-stars`}
               type="radio"
-              onChange={ratingChangeHanlder}
+              onChange={handleInputRaiting}
             />
             <label
               htmlFor={`${stars}-stars`}
@@ -60,7 +60,7 @@ export const CommentsForm = () => {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={reviewChangeHanlder}
+        onChange={handleInputReview}
       >
       </textarea>
       <div className="reviews__button-wrapper">
