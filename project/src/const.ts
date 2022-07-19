@@ -2,7 +2,7 @@ export enum AppRoutes {
   Main = '/',
   Login = 'login',
   Favorites = 'favorites',
-  Property = 'property',
+  Room = 'offer/:id',
 }
 
 export enum AuthorizationStatus {
