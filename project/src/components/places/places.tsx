@@ -5,12 +5,18 @@ import React from 'react';
 
 type PlacesProps = {
   places: Hotel[];
+  cb: (id: number | null) => void;
 };
 
-export const Places: FC<PlacesProps> = ({ places }) => {
-  const [, setHoveredHotelCard] = useState<number | null>(null);
+export const Places: FC<PlacesProps> = ({ places, cb }) => {
+  const [hoveredHotelCard, setHoveredHotelCard] = useState<number | null>(null);
 
   const handleHotelCardMouseLeave = () => setHoveredHotelCard(null);
+
+  const handleHotelCardMouseEnter = (hotelCard : number | null) => {
+    setHoveredHotelCard(hotelCard);
+    cb(hoveredHotelCard);
+  };
 
   return (
     <section className="cities__places places">
@@ -42,7 +48,7 @@ export const Places: FC<PlacesProps> = ({ places }) => {
       <div className="cities__places-list places__list tabs__content">
         {places.map((place: Hotel) => (
           <PlaceCard
-            onMouseOver={setHoveredHotelCard}
+            onMouseOver={handleHotelCardMouseEnter}
             onMouseLeave={handleHotelCardMouseLeave}
             place={place}
             key={place.id}
