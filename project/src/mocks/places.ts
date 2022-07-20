@@ -5,9 +5,9 @@ export const places: Hotel[] = [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 52,
-        longitude: 4,
-        zoom: 4,
+        latitude: 52.377956,
+        longitude: 4.897070,
+        zoom: 12,
       },
       name: 'Amsterdam',
     },
@@ -39,9 +39,9 @@ export const places: Hotel[] = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 52,
-        longitude: 4,
-        zoom: 4,
+        latitude: 52.377956,
+        longitude: 4.897070,
+        zoom: 12,
       },
       name: 'Amsterdam',
     },
@@ -73,9 +73,9 @@ export const places: Hotel[] = [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 52,
-        longitude: 4,
-        zoom: 4,
+        latitude: 52.377956,
+        longitude: 4.897070,
+        zoom: 12,
       },
       name: 'Amsterdam',
     },
@@ -107,9 +107,9 @@ export const places: Hotel[] = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 52,
-        longitude: 4,
-        zoom: 4,
+        latitude: 52.377956,
+        longitude: 4.897070,
+        zoom: 12,
       },
       name: 'Amsterdam',
     },

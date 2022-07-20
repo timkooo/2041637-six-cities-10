@@ -1,21 +1,19 @@
 import { Hotel } from '../../types/hotel';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { PlaceCard } from '../place-card/place-card';
 import React from 'react';
 
 type PlacesProps = {
   places: Hotel[];
-  cb: (id: number | null) => void;
+  onCardFocusChange: (id: number | null) => void;
 };
 
-export const Places: FC<PlacesProps> = ({ places, cb }) => {
-  const [hoveredHotelCard, setHoveredHotelCard] = useState<number | null>(null);
+export const Places: FC<PlacesProps> = ({ places, onCardFocusChange }) => {
 
-  const handleHotelCardMouseLeave = () => setHoveredHotelCard(null);
+  const handleHotelCardMouseLeave = () => onCardFocusChange(null);
 
   const handleHotelCardMouseEnter = (hotelCard : number | null) => {
-    setHoveredHotelCard(hotelCard);
-    cb(hoveredHotelCard);
+    onCardFocusChange(hotelCard);
   };
 
   return (

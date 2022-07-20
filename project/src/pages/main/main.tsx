@@ -3,6 +3,7 @@ import { Places } from '../../components/places/places';
 import { Map } from '../../components/map/map';
 import { Comment } from '../../types/comment';
 import { Hotel } from '../../types/hotel';
+import { Cities } from '../../utils';
 
 type MainProps = {
   places: Hotel[];
@@ -10,8 +11,7 @@ type MainProps = {
 };
 
 export const Main: FC<MainProps> = ({ places, reviews }) => {
-
-  const [selectedPlace, setSelectedPlace] = useState<number | null>(null);
+  const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 
   return (
     <div className="page page--gray page--main">
@@ -59,50 +59,22 @@ export const Main: FC<MainProps> = ({ places, reviews }) => {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {Object.values(Cities).map((city) => (
+                <li key={city} className="locations__item">
+                  <a className="locations__item-link tabs__item" href="#">
+                    <span>{city}</span>
+                  </a>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <Places places={places} cb={setSelectedPlace} />
+            <Places places={places} onCardFocusChange={setSelectedPlaceId} />
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map places={places} city={{
-                  name: 'Amsterdam',
-                  lat: 52.377956,
-                  lng: 4.897070,
-                }} selectedPlace={selectedPlace}
-                />
+                <Map places={places} selectedPlaceId={selectedPlaceId} />
               </section>
             </div>
           </div>
