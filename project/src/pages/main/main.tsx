@@ -3,7 +3,7 @@ import { Places } from '../../components/places/places';
 import { Map } from '../../components/map/map';
 import { Comment } from '../../types/comment';
 import { Hotel } from '../../types/hotel';
-import { Cities } from '../../utils';
+import { Cities } from '../../const';
 
 type MainProps = {
   places: Hotel[];
