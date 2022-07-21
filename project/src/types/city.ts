@@ -6,5 +6,5 @@ export type City = {
     longitude: number,
     zoom: number,
   },
-  name: Cities,
+  name: keyof typeof Cities,
 }
