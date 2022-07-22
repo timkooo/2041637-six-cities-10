@@ -1,7 +1,11 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { CommentsForm } from '../../components/comments-form/comments-form';
-import { AppRoutes } from '../../const';
+import { Map } from '../../components/map/map';
+import { Places } from '../../components/places/places';
+import { ReviewsList } from '../../components/reviews-list/reviews-list';
+import { AppRoutes, htmlClasses } from '../../const';
+import { reviews } from '../../mocks/reviews';
 import { Hotel } from '../../types/hotel';
 import { getRating } from '../../utils';
 
@@ -14,10 +18,12 @@ export const Room: FC<RoomProps> = ({ places }) => {
   const currentPlace = places.find(
     (place) => place.id.toString() === params.id
   );
+  const nearPlaces = places.filter((place) => place.id.toString() !== params.id);
   const rating = currentPlace ? getRating(currentPlace.rating) : '0%';
+  const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 
   if (!currentPlace) {
-    return <Navigate to="/*"/>;
+    return <Navigate to="/*" />;
   }
 
   return (
@@ -78,7 +84,9 @@ export const Room: FC<RoomProps> = ({ places }) => {
                 <h1 className="property__name">{currentPlace.description}</h1>
                 <button
                   className={`property__bookmark-button ${
-                    currentPlace.isFavorite ? 'property__bookmark-button--active' : ''
+                    currentPlace.isFavorite
+                      ? 'property__bookmark-button--active'
+                      : ''
                   } button`}
                   type="button"
                 >
@@ -131,7 +139,11 @@ export const Room: FC<RoomProps> = ({ places }) => {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper ${currentPlace.host.isPro && 'property__avatar-wrapper--pro'} user__avatar-wrapper`}>
+                  <div
+                    className={`property__avatar-wrapper ${
+                      currentPlace.host.isPro && 'property__avatar-wrapper--pro'
+                    } user__avatar-wrapper`}
+                  >
                     <img
                       className="property__avatar user__avatar"
                       src={currentPlace.host.avatarUrl}
@@ -153,51 +165,28 @@ export const Room: FC<RoomProps> = ({ places }) => {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
-                  Reviews &middot; <span className="reviews__amount">1</span>
+                  Reviews &middot;{' '}
+                  <span className="reviews__amount">{reviews.length}</span>
                 </h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src="img/avatar-max.jpg"
-                          width="54"
-                          height="54"
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">Max</span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{ width: '80%' }}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river
-                        by the unique lightness of Amsterdam. The building is
-                        green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">
-                        April 2019
-                      </time>
-                    </div>
-                  </li>
-                </ul>
+                <ReviewsList reviews={reviews} />
                 <CommentsForm />
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map places={nearPlaces} selectedPlaceId={selectedPlaceId} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
+            <Places
+              places={nearPlaces}
+              onCardFocusChange={setSelectedPlaceId}
+              htmlPlacesClass={htmlClasses.near}
+            />
             <div className="near-places__list places__list">
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
