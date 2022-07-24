@@ -1,17 +1,35 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Places } from '../../components/places/places';
 import { Map } from '../../components/map/map';
-import { Comment } from '../../types/comment';
-import { Hotel } from '../../types/hotel';
+// import { Comment } from '../../types/comment';
+// import { Hotel } from '../../types/hotel';
 import { Cities, htmlClasses } from '../../const';
+import { Link, useParams } from 'react-router-dom';
+import { changeCity } from '../../store/action';
+import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 
-type MainProps = {
-  places: Hotel[];
-  reviews?: Comment[];
-};
+// type MainProps = {
+//   places?: Hotel[];
+//   reviews?: Comment[];
+// };
 
-export const Main: FC<MainProps> = ({ places, reviews }) => {
+// export const Main: FC<MainProps> = ({ places, reviews }) => {
+export const Main = () => {
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
+  const [selectedPlaces, setSelectedPlaces] = useState<number | null>(null);
+  const [selectedCity, setSelectedCity] = useState<number | null>(null);
+  const { currentCity } = useParams();
+  const dispatch = useAppDispatch();
+  
+  const handler = () => {
+    dispatch(changeCity(currentCity));
+  };
+
+  const currentPlaces = useAppSelector((state) => state.currentPlaces);
+
+  React.useEffect(() => {
+    
+  });
 
   return (
     <div className="page page--gray page--main">
@@ -61,9 +79,12 @@ export const Main: FC<MainProps> = ({ places, reviews }) => {
             <ul className="locations__list tabs__list">
               {Object.values(Cities).map((city) => (
                 <li key={city} className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
+                  <Link
+                    className="locations__item-link tabs__item"
+                    to={`/${city}`}
+                  >
                     <span>{city}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -101,14 +122,14 @@ export const Main: FC<MainProps> = ({ places, reviews }) => {
                 </ul>
               </form>
               <Places
-                places={places}
+                places={currentPlaces}
                 onCardFocusChange={setSelectedPlaceId}
                 htmlPlacesClass={htmlClasses.cities}
               />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map places={places} selectedPlaceId={selectedPlaceId} />
+                <Map places={currentPlaces} selectedPlaceId={selectedPlaceId} />
               </section>
             </div>
           </div>

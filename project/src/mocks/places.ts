@@ -137,4 +137,38 @@ export const places: Hotel[] = [
     title: 'Hong Kong Resort & Spa',
     type: 'room',
   },
+  {
+    bedrooms: 1,
+    city: {
+      location: {
+        latitude: 52.377956,
+        longitude: 4.897070,
+        zoom: 12,
+      },
+      name: 'Paris',
+    },
+    description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
+    goods: ['Heating'],
+    host: {
+      avatarUrl: 'http://picsum.photos/300/200?random=4',
+      id: 4,
+      isPro: true,
+      name: 'Chan',
+    },
+    id: 4,
+    images: ['http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4'],
+    isFavorite: false,
+    isPremium: false,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 2,
+    },
+    maxAdults: 1,
+    previewImage: 'http://picsum.photos/300/200?random=4',
+    price: 30,
+    rating: 0.5,
+    title: 'Hong Kong Resort & Spa',
+    type: 'room',
+  },
 ];

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
 import { Favorites } from '../../pages/favorites/favorites';
 import { Login } from '../../pages/login/login';
@@ -18,7 +18,10 @@ type AppProps = {
 export const App: FC<AppProps> = ({reviews, places}) => (
   <BrowserRouter>
     <Routes>
-      <Route path={AppRoutes.Main} element={<Main places={places} />} />
+      <Route path={AppRoutes.Main} >
+        <Route index element={<Navigate to='Paris' />} />
+        <Route path=":currentCity" element={<Main />} />
+      </Route>
       <Route
         path={AppRoutes.Favorites}
         element={
