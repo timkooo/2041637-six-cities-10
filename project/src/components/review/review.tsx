@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Comment } from '../../types/comment';
+import { getDateFromString, getRating } from '../../utils';
 
 type ReviewProps = {
   review: Comment;
@@ -22,14 +23,12 @@ export const Review: FC<ReviewProps> = ({ review }) => (
     <div className="reviews__info">
       <div className="reviews__rating rating">
         <div className="reviews__stars rating__stars">
-          <span style={{ width: '80%' }}></span>
+          <span style={{ width: getRating(review.rating)}}></span>
           <span className="visually-hidden">{review.rating}</span>
         </div>
       </div>
-      <p className="reviews__text">
-        {review.comment}
-      </p>
-      <time className="reviews__time" dateTime="2019-04-24">
+      <p className="reviews__text">{review.comment}</p>
+      <time className="reviews__time" dateTime={getDateFromString(review.date)}>
         {review.date}
       </time>
     </div>

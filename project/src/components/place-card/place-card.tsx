@@ -10,8 +10,8 @@ type PlaceCardProps = {
     rootPlaceCardClass?: string;
     placeCardInfoClass?: string;
   }
-  onMouseOver?: (id: number) => void;
-  onMouseLeave?: (id: number) => void;
+  onMouseOver?: (id: number | null) => void;
+  onMouseLeave?: (id: number | null) => void;
 };
 
 export const PlaceCard: FC<PlaceCardProps> = (props) => {
@@ -35,7 +35,7 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
   };
 
   const handleOnMouseLeave = () => {
-    onMouseLeave?.(place.id);
+    onMouseLeave?.(null);
   };
 
   return (

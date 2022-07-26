@@ -141,8 +141,8 @@ export const places: Hotel[] = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 52.377956,
-        longitude: 4.897070,
+        latitude: 48.864716,
+        longitude: 2.349014,
         zoom: 12,
       },
       name: 'Paris',
@@ -160,8 +160,8 @@ export const places: Hotel[] = [
     isFavorite: false,
     isPremium: false,
     location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
+      latitude: 48.864716,
+      longitude: 2.349014,
       zoom: 2,
     },
     maxAdults: 1,

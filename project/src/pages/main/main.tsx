@@ -1,35 +1,21 @@
-import React, { FC, useState } from 'react';
+import { useState } from 'react';
 import { Places } from '../../components/places/places';
 import { Map } from '../../components/map/map';
-// import { Comment } from '../../types/comment';
-// import { Hotel } from '../../types/hotel';
 import { Cities, htmlClasses } from '../../const';
-import { Link, useParams } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { changeCity } from '../../store/action';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
+import { selectCurrentPlaces } from '../../store/reducer';
 
-// type MainProps = {
-//   places?: Hotel[];
-//   reviews?: Comment[];
-// };
 
-// export const Main: FC<MainProps> = ({ places, reviews }) => {
 export const Main = () => {
+  const currentPlaces = useAppSelector(selectCurrentPlaces);
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
-  const [selectedPlaces, setSelectedPlaces] = useState<number | null>(null);
-  const [selectedCity, setSelectedCity] = useState<number | null>(null);
-  const { currentCity } = useParams();
   const dispatch = useAppDispatch();
-  
-  const handler = () => {
-    dispatch(changeCity(currentCity));
+
+  const handleCityChange = (city: string) => {
+    dispatch(changeCity(city));
   };
-
-  const currentPlaces = useAppSelector((state) => state.currentPlaces);
-
-  React.useEffect(() => {
-    
-  });
 
   return (
     <div className="page page--gray page--main">
@@ -81,9 +67,9 @@ export const Main = () => {
                 <li key={city} className="locations__item">
                   <Link
                     className="locations__item-link tabs__item"
-                    to={`/${city}`}
+                    to="#"
                   >
-                    <span>{city}</span>
+                    <span onClick={() => handleCityChange(city)}>{city}</span>
                   </Link>
                 </li>
               ))}
@@ -94,7 +80,7 @@ export const Main = () => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{currentPlaces.length} places to stay in {currentPlaces[0].city.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -138,3 +124,4 @@ export const Main = () => {
     </div>
   );
 };
+
