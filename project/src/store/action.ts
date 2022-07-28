@@ -6,3 +6,9 @@ export const changeCity = createAction('main/changeCity', (city) => ({
   }
 }));
 
+
+export const changeSorting = createAction('main/changeСurrentSorting', (sorting) => ({
+  payload: {
+    currentSorting: sorting,
+  }
+}));
