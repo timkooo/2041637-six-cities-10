@@ -1,4 +1,4 @@
-import { Hotel } from './types/hotel';
+import { sortPriceHighToLow, sortPriceLowToHigh, sortRating } from './utils';
 
 export enum AppRoutes {
   Main = '/',
@@ -45,36 +45,6 @@ export enum SortingTypes {
   PriceHighToLow = 'Price: high to low',
   TopRated = 'Top rated first',
 }
-
-export const sortPriceLowToHigh = (placeA: Hotel, placeB: Hotel) => {
-  if (placeA.price < placeB.price) {
-    return -1;
-  }
-  if (placeA.price > placeB.price) {
-    return 1;
-  }
-  return 0;
-};
-
-export const sortPriceHighToLow = (placeA: Hotel, placeB: Hotel) => {
-  if (placeA.price > placeB.price) {
-    return -1;
-  }
-  if (placeA.price < placeB.price) {
-    return 1;
-  }
-  return 0;
-};
-
-export const sortRating = (placeA: Hotel, placeB: Hotel) => {
-  if (placeA.rating > placeB.rating) {
-    return -1;
-  }
-  if (placeA.rating < placeB.rating) {
-    return 1;
-  }
-  return 0;
-};
 
 export const sortingToFunction = {
   [SortingTypes.Popular] : () => 0,
