@@ -1,3 +1,5 @@
+import { sortPriceHighToLow, sortPriceLowToHigh, sortRating } from './utils';
+
 export enum AppRoutes {
   Main = '/',
   Login = 'login',
@@ -35,4 +37,18 @@ export const htmlClasses = {
       rootPlaceCardClass: 'near-places__card',
     }
   }
+};
+
+export enum SortingTypes {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRated = 'Top rated first',
+}
+
+export const sortingToFunction = {
+  [SortingTypes.Popular] : () => 0,
+  [SortingTypes.PriceLowToHigh] : sortPriceLowToHigh ,
+  [SortingTypes.PriceHighToLow] : sortPriceHighToLow,
+  [SortingTypes.TopRated] : sortRating,
 };

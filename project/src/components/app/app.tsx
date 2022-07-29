@@ -18,7 +18,7 @@ type AppProps = {
 export const App: FC<AppProps> = ({reviews, places}) => (
   <BrowserRouter>
     <Routes>
-      <Route path={AppRoutes.Main} element={<Main places={places} />} />
+      <Route path={AppRoutes.Main} element={<Main />} />
       <Route
         path={AppRoutes.Favorites}
         element={

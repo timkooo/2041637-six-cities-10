@@ -19,8 +19,7 @@ export const Places: FC<PlacesProps> = ({ places, onCardFocusChange, htmlPlacesC
   <div className={`${htmlPlacesClass.class} places__list ${htmlPlacesClass.class === 'cities__place-list' ? 'tabs__content' : ''}`}>
     {places.map((place: Hotel) => (
       <PlaceCard
-        onMouseOver={onCardFocusChange}
-        onMouseLeave={onCardFocusChange}
+        onCardFocusChange={onCardFocusChange}
         place={place}
         key={place.id}
         htmlClasses={
