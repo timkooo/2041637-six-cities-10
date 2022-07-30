@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Comment } from '../../types/comment';
-import { getRating, convertDate } from '../../utils';
+import { getRating, formatDateDisplayValue, formatDateAttribute } from '../../utils';
 
 type ReviewProps = {
   review: Comment;
@@ -28,8 +28,8 @@ export const Review: FC<ReviewProps> = ({ review }) => (
         </div>
       </div>
       <p className="reviews__text">{review.comment}</p>
-      <time className="reviews__time" dateTime={convertDate(review.date)}>
-        {review.date}
+      <time className="reviews__time" dateTime={formatDateAttribute(review.date)}>
+        {formatDateDisplayValue(review.date)}
       </time>
     </div>
   </li>

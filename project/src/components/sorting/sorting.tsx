@@ -7,14 +7,16 @@ type SortingProps = {
 };
 
 export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
-  const [isSortingTypeShown, setIsSortingTypeShown] = useState(false);
+  const [isSortMenuVisible, setIsSortMenuVisible] = useState(false);
+
+  const toggleSortMenu = () => setIsSortMenuVisible((prevState) => !prevState);
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span
         className="places__sorting-type"
-        onClick={() => setIsSortingTypeShown((prevState) => !prevState)}
+        onClick={toggleSortMenu}
         tabIndex={0}
       >
         {currentSorting}
@@ -24,7 +26,7 @@ export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
       </span>
       <ul
         className={`places__options places__options--custom ${
-          isSortingTypeShown && 'places__options--opened'
+          isSortMenuVisible && 'places__options--opened'
         }`}
       >
         {Object.entries(SortingTypes).map(([name, value]) => (
@@ -32,7 +34,7 @@ export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
             key={value.toString()}
             currentSorting={currentSorting}
             sortingType={value}
-            handleOptionsVisibility={setIsSortingTypeShown}
+            handleOptionsVisibility={toggleSortMenu}
           />
         ))}
       </ul>

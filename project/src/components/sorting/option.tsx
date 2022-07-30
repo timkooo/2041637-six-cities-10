@@ -13,22 +13,22 @@ export const Option: FC<OptionProps> = ({
   sortingType,
   handleOptionsVisibility,
 }) => {
-  const [isPressed, setIsPressed] = useState(false);
+  const [isSortingTypeSelected, setisSortingTypeSelected] = useState(false);
   const dispatch = useAppDispatch();
 
-  if (currentSorting !== sortingType && isPressed) {
-    setIsPressed(false);
+  if (currentSorting !== sortingType && isSortingTypeSelected) {
+    setisSortingTypeSelected(false);
   }
 
   let optionClass = 'places__option';
-  if (isPressed) {
+  if (isSortingTypeSelected) {
     optionClass += ' places__option--active';
   }
 
   const sortHandler = (type: string) => {
     if (currentSorting !== sortingType) {
       dispatch(changeSorting(type));
-      setIsPressed((prevState) => !prevState);
+      setisSortingTypeSelected((prevState) => !prevState);
     }
     handleOptionsVisibility(false);
   };
