@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { Hotel } from '../../types/hotel';
 import { getRating } from '../../utils';
 
@@ -15,6 +15,8 @@ type PlaceCardProps = {
 };
 
 export const PlaceCard: FC<PlaceCardProps> = (props) => {
+  const navigate = useNavigate();
+
   const {
     onCardFocusChange,
     place,
@@ -37,8 +39,12 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
     onCardFocusChange?.(null);
   };
 
+  const handleMouseClick = () => {
+    navigate(`./offer/${place.id}`);
+  };
+
   return (
-    <article className={classNames(rootPlaceCardClass, 'place-card')} onMouseOver={handleOnMouseOver} onMouseLeave={handleOnMouseLeave}>
+    <article className={`${rootPlaceCardClass} place-card`} onMouseOver={handleOnMouseOver} onMouseLeave={handleOnMouseLeave} onClick={handleMouseClick}>
       {place.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>

@@ -1,19 +1,17 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { CommentsForm } from '../../components/comments-form/comments-form';
 import { Map } from '../../components/map/map';
 import { Places } from '../../components/places/places';
 import { ReviewsList } from '../../components/reviews-list/reviews-list';
 import { AppRoutes, htmlClasses } from '../../const';
+import { useAppSelector } from '../../hooks/rtkHooks';
 import { reviews } from '../../mocks/reviews';
-import { Hotel } from '../../types/hotel';
+// import { Hotel } from '../../types/hotel';
 import { getRating } from '../../utils';
 
-type RoomProps = {
-  places: Hotel[];
-};
-
-export const Room: FC<RoomProps> = ({ places }) => {
+export const Room = () => {
+  const places = useAppSelector((state) => state.places);
   const params = useParams();
   const currentPlace = places.find(
     (place) => place.id.toString() === params.id

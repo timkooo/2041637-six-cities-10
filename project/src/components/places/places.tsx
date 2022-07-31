@@ -22,7 +22,7 @@ export const Places: FC<PlacesProps> = ({ places, onCardFocusChange, htmlPlacesC
       <PlaceCard
         onCardFocusChange={onCardFocusChange}
         place={place}
-        key={place.id}
+        key={place.id.toString()}
         htmlClasses={
           htmlPlacesClass.cardClass
         }

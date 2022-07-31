@@ -4,6 +4,9 @@ import { App } from './components/app/app';
 import { places } from './mocks/places';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
+import { fetchPlacesAction } from './store/api-actions';
+
+store.dispatch(fetchPlacesAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

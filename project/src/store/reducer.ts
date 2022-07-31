@@ -1,7 +1,7 @@
 import { createReducer, createSelector } from '@reduxjs/toolkit';
-import { changeCity, changeSorting } from './action';
+import { changeCity, changeSorting, loadPlaces, setDataLoadedStatus } from './action';
 import { Cities } from '../const';
-import { places } from '../mocks/places';
+//import { places } from '../mocks/places';
 import { getPlacesByCity } from '../utils';
 import { RootState } from '../types/store';
 import { SortingTypes, sortingToFunction } from '../const';
@@ -18,7 +18,7 @@ export const selectCurrentPlaces = createSelector(
       return getPlacesByCity(currentCity, placesAll);
     }
     return getPlacesByCity(currentCity, placesAll).sort(
-      sortingToFunction[currentSorting]
+      sortingToFunction[SortingTypes[currentSorting]]
     );
   }
 );
@@ -27,12 +27,14 @@ type InitialState = {
   places: Hotel[],
   currentCity: Cities,
   currentSorting: SortingTypes,
+  isDataLoaded: boolean,
 }
 
 const initialState: InitialState = {
-  places,
+  places: [],
   currentCity: Cities.Paris,
   currentSorting: SortingTypes.Popular,
+  isDataLoaded: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -42,5 +44,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeSorting, (state, action) => {
       state.currentSorting = action.payload.currentSorting;
+    })
+    .addCase(loadPlaces, (state, action) => {
+      state.places = action.payload;
+    })
+    .addCase(setDataLoadedStatus, (state, action) => {
+      state.isDataLoaded = action.payload;
     });
 });
