@@ -1,15 +1,27 @@
 import { FC, useState } from 'react';
 import { SortingTypes } from '../../const';
-import { Option } from './option';
+import { useAppDispatch } from '../../hooks/rtkHooks';
+import { changeSorting } from '../../store/action';
+import classNames from 'classnames';
 
 type SortingProps = {
-  currentSorting: string;
+  currentSorting: keyof typeof SortingTypes;
 };
 
 export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
   const [isSortMenuVisible, setIsSortMenuVisible] = useState(false);
-
+  const [selectedSorting, setSelectedSorting] = useState('Popular');
   const toggleSortMenu = () => setIsSortMenuVisible((prevState) => !prevState);
+  const dispatch = useAppDispatch();
+
+  const handleSelectedSorting = (sorting: string) => {
+    if (currentSorting === sorting) {
+      return;
+    }
+    setSelectedSorting(sorting);
+    dispatch(changeSorting(sorting));
+    toggleSortMenu();
+  };
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -25,17 +37,17 @@ export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
         </svg>
       </span>
       <ul
-        className={`places__options places__options--custom ${
-          isSortMenuVisible && 'places__options--opened'
-        }`}
+        className={classNames('places__options places__options--custom', {'places__options--opened' : isSortMenuVisible })}
       >
         {Object.entries(SortingTypes).map(([name, value]) => (
-          <Option
-            key={value.toString()}
-            currentSorting={currentSorting}
-            sortingType={value}
-            handleOptionsVisibility={toggleSortMenu}
-          />
+          <li
+            key={value}
+            className={classNames('places__option', {'places__option--active' : selectedSorting === name})}
+            onClick={() => handleSelectedSorting(name)}
+            tabIndex={0}
+          >
+            {value}
+          </li>
         ))}
       </ul>
     </form>

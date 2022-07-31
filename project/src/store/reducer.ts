@@ -5,6 +5,7 @@ import { places } from '../mocks/places';
 import { getPlacesByCity } from '../utils';
 import { RootState } from '../types/store';
 import { SortingTypes, sortingToFunction } from '../const';
+import { Hotel } from '../types/hotel';
 
 const selectPlaces = (state: RootState) => state.places;
 const selectCurrentCity = (state: RootState) => state.currentCity;
@@ -17,12 +18,18 @@ export const selectCurrentPlaces = createSelector(
       return getPlacesByCity(currentCity, placesAll);
     }
     return getPlacesByCity(currentCity, placesAll).sort(
-      sortingToFunction[currentSorting]
+      sortingToFunction[SortingTypes[currentSorting]]
     );
   }
 );
 
-const initialState = {
+type InitialState = {
+  places: Hotel[],
+  currentCity: keyof typeof Cities,
+  currentSorting: keyof typeof SortingTypes,
+}
+
+const initialState: InitialState = {
   places,
   currentCity: Cities.Paris,
   currentSorting: SortingTypes.Popular,

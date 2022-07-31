@@ -15,7 +15,7 @@ export const Main = () => {
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
   const dispatch = useAppDispatch();
 
-  const handleCityChange = (city: string) => {
+  const handleCityChange = (city: keyof typeof Cities) => {
     dispatch(changeCity(city));
   };
 

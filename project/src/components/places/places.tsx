@@ -1,6 +1,7 @@
 import { Hotel } from '../../types/hotel';
 import { FC } from 'react';
 import { PlaceCard } from '../place-card/place-card';
+import classNames from 'classnames';
 
 type PlacesProps = {
   places: Hotel[];
@@ -16,7 +17,7 @@ type PlacesProps = {
 };
 
 export const Places: FC<PlacesProps> = ({ places, onCardFocusChange, htmlPlacesClass }) => (
-  <div className={`${htmlPlacesClass.class} places__list ${htmlPlacesClass.class === 'cities__place-list' ? 'tabs__content' : ''}`}>
+  <div className={classNames(htmlPlacesClass.class, 'places__list', {'tabs__content' : htmlPlacesClass.class === 'cities__places-list' })}>
     {places.map((place: Hotel) => (
       <PlaceCard
         onCardFocusChange={onCardFocusChange}
