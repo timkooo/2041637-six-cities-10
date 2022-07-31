@@ -4,21 +4,38 @@ import { useAppDispatch } from '../../hooks/rtkHooks';
 import { changeSorting } from '../../store/action';
 import classNames from 'classnames';
 
+const sortingOptions: { label : string, type : SortingTypes}[] = [
+  {
+    label: 'Popular',
+    type: SortingTypes.Popular,
+  },
+  {
+    label: 'Price: low to high',
+    type: SortingTypes.PriceLowToHigh,
+  },
+  {
+    label: 'Price: high to low',
+    type: SortingTypes.PriceHighToLow,
+  },
+  {
+    label: 'Top rated first',
+    type: SortingTypes.TopRated,
+  }
+];
+
 type SortingProps = {
-  currentSorting: keyof typeof SortingTypes;
+  currentSorting: SortingTypes;
 };
 
 export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
   const [isSortMenuVisible, setIsSortMenuVisible] = useState(false);
-  const [selectedSorting, setSelectedSorting] = useState('Popular');
   const toggleSortMenu = () => setIsSortMenuVisible((prevState) => !prevState);
   const dispatch = useAppDispatch();
 
-  const handleSelectedSorting = (sorting: string) => {
+  const handleSelectedSorting = (sorting: SortingTypes) => {
     if (currentSorting === sorting) {
       return;
     }
-    setSelectedSorting(sorting);
     dispatch(changeSorting(sorting));
     toggleSortMenu();
   };
@@ -39,14 +56,14 @@ export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
       <ul
         className={classNames('places__options places__options--custom', {'places__options--opened' : isSortMenuVisible })}
       >
-        {Object.entries(SortingTypes).map(([name, value]) => (
+        {sortingOptions.map((option) => (
           <li
-            key={value}
-            className={classNames('places__option', {'places__option--active' : selectedSorting === name})}
-            onClick={() => handleSelectedSorting(name)}
+            key={option.type}
+            className={classNames('places__option', {'places__option--active' : currentSorting === option.type})}
+            onClick={() => handleSelectedSorting(option.type)}
             tabIndex={0}
           >
-            {value}
+            {option.label}
           </li>
         ))}
       </ul>

@@ -18,15 +18,15 @@ export const selectCurrentPlaces = createSelector(
       return getPlacesByCity(currentCity, placesAll);
     }
     return getPlacesByCity(currentCity, placesAll).sort(
-      sortingToFunction[SortingTypes[currentSorting]]
+      sortingToFunction[currentSorting]
     );
   }
 );
 
 type InitialState = {
   places: Hotel[],
-  currentCity: keyof typeof Cities,
-  currentSorting: keyof typeof SortingTypes,
+  currentCity: Cities,
+  currentSorting: SortingTypes,
 }
 
 const initialState: InitialState = {
