@@ -1,7 +1,6 @@
 import { createReducer, createSelector } from '@reduxjs/toolkit';
 import { changeCity, changeSorting, loadPlaces, setDataLoadedStatus } from './action';
 import { Cities } from '../const';
-//import { places } from '../mocks/places';
 import { getPlacesByCity } from '../utils';
 import { RootState } from '../types/store';
 import { SortingTypes, sortingToFunction } from '../const';
