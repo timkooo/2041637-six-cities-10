@@ -1,20 +1,51 @@
 import { FC, useState } from 'react';
 import { SortingTypes } from '../../const';
-import { Option } from './option';
+import { useAppDispatch } from '../../hooks/rtkHooks';
+import { changeSorting } from '../../store/action';
+import classNames from 'classnames';
+
+const sortingOptions: { label : string, type : SortingTypes}[] = [
+  {
+    label: 'Popular',
+    type: SortingTypes.Popular,
+  },
+  {
+    label: 'Price: low to high',
+    type: SortingTypes.PriceLowToHigh,
+  },
+  {
+    label: 'Price: high to low',
+    type: SortingTypes.PriceHighToLow,
+  },
+  {
+    label: 'Top rated first',
+    type: SortingTypes.TopRated,
+  }
+];
 
 type SortingProps = {
-  currentSorting: string;
+  currentSorting: SortingTypes;
 };
 
 export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
-  const [isSortingTypeShown, setIsSortingTypeShown] = useState(false);
+  const [isSortMenuVisible, setIsSortMenuVisible] = useState(false);
+  const toggleSortMenu = () => setIsSortMenuVisible((prevState) => !prevState);
+  const dispatch = useAppDispatch();
+
+  const handleSelectedSorting = (sorting: SortingTypes) => {
+    if (currentSorting === sorting) {
+      return;
+    }
+    dispatch(changeSorting(sorting));
+    toggleSortMenu();
+  };
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span
         className="places__sorting-type"
-        onClick={() => setIsSortingTypeShown((prevState) => !prevState)}
+        onClick={toggleSortMenu}
         tabIndex={0}
       >
         {currentSorting}
@@ -23,17 +54,17 @@ export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
         </svg>
       </span>
       <ul
-        className={`places__options places__options--custom ${
-          isSortingTypeShown && 'places__options--opened'
-        }`}
+        className={classNames('places__options places__options--custom', {'places__options--opened' : isSortMenuVisible })}
       >
-        {Object.entries(SortingTypes).map(([name, value]) => (
-          <Option
-            key={value.toString()}
-            currentSorting={currentSorting}
-            sortingType={value}
-            handleOptionsVisibility={setIsSortingTypeShown}
-          />
+        {sortingOptions.map((option) => (
+          <li
+            key={option.type}
+            className={classNames('places__option', {'places__option--active' : currentSorting === option.type})}
+            onClick={() => handleSelectedSorting(option.type)}
+            tabIndex={0}
+          >
+            {option.label}
+          </li>
         ))}
       </ul>
     </form>

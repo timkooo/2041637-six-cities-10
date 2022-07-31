@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import type { Hotel } from '../../types/hotel';
@@ -37,13 +38,13 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
   };
 
   return (
-    <article className={`${rootPlaceCardClass} place-card`} onMouseOver={handleOnMouseOver} onMouseLeave={handleOnMouseLeave}>
+    <article className={classNames(rootPlaceCardClass, 'place-card')} onMouseOver={handleOnMouseOver} onMouseLeave={handleOnMouseLeave}>
       {place.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className={`${imageWrapperClass} place-card__image-wrapper`}>
+      <div className={classNames(imageWrapperClass, 'place-card__image-wrapper')}>
         <a href="#">
           <img
             className="place-card__image"
@@ -62,7 +63,7 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
             </b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${ place.isFavorite && ('place-card__bookmark-button--active')} button`} type="button">
+          <button className={classNames('place-card__bookmark-button', {'place-card__bookmark-button--active' : place.isFavorite}, 'button')} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

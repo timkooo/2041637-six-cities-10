@@ -4,7 +4,7 @@ export const reviews: Comment[] = [
   {
     comment:
       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
-    date: 'April 2021',
+    date: 'Sat Jul 30 2022 11:43:49 GMT+0300 (Москва, стандартное время)',
     id: 1,
     rating: 4,
     user: {
@@ -17,7 +17,7 @@ export const reviews: Comment[] = [
   {
     comment:
       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
-    date: 'October 2010',
+    date: 'Sat Jul 30 2022 11:43:49 GMT+0300 (Москва, стандартное время)',
     id: 2,
     rating: 3,
     user: {
@@ -30,7 +30,7 @@ export const reviews: Comment[] = [
   {
     comment:
       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
-    date: 'April 2021',
+    date: 'Sat Jul 30 2022 11:43:49 GMT+0300 (Москва, стандартное время)',
     id: 3,
     rating: 1,
     user: {
@@ -43,7 +43,7 @@ export const reviews: Comment[] = [
   {
     comment:
       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
-    date: 'June 1998',
+    date: 'Sat Jul 30 2022 11:43:49 GMT+0300 (Москва, стандартное время)',
     id: 4,
     rating: 5,
     user: {
@@ -56,7 +56,7 @@ export const reviews: Comment[] = [
   {
     comment:
       'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
-    date: 'Fabruary 2008',
+    date: 'Sat Jul 30 2022 11:43:49 GMT+0300 (Москва, стандартное время)',
     id: 5,
     rating: 3,
     user: {

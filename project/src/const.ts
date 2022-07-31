@@ -41,9 +41,9 @@ export const htmlClasses = {
 
 export enum SortingTypes {
   Popular = 'Popular',
-  PriceLowToHigh = 'Price: low to high',
-  PriceHighToLow = 'Price: high to low',
-  TopRated = 'Top rated first',
+  PriceLowToHigh = 'PriceLowToHigh',
+  PriceHighToLow = 'PriceHighToLow',
+  TopRated = 'TopRated',
 }
 
 export const sortingToFunction = {
