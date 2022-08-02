@@ -1,27 +1,36 @@
-import { useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { CommentsForm } from '../../components/comments-form/comments-form';
 import { Map } from '../../components/map/map';
 import { Places } from '../../components/places/places';
 import { ReviewsList } from '../../components/reviews-list/reviews-list';
 import { AppRoutes, htmlClasses } from '../../const';
-import { useAppSelector } from '../../hooks/rtkHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import { reviews } from '../../mocks/reviews';
-// import { Hotel } from '../../types/hotel';
+import { fetchPlaceById } from '../../store/api-actions';
 import { getRating } from '../../utils';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 export const Room = () => {
-  const places = useAppSelector((state) => state.places);
   const params = useParams();
-  const currentPlace = places.find(
-    (place) => place.id.toString() === params.id
-  );
+  const dispatch = useAppDispatch();
+  const places = useAppSelector((state) => state.places);
+  const currentPlace = useAppSelector((state) => state.currentPlace);
+  const isCurrentPlaceLoaded = useAppSelector((state) => state.isCurrentPlaceLoaded);
   const nearPlaces = places.filter((place) => place.id.toString() !== params.id);
   const rating = currentPlace ? getRating(currentPlace.rating) : '0%';
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 
-  if (!currentPlace) {
-    return <Navigate to="/*" />;
+  useEffect(()=> {
+    dispatch(fetchPlaceById(params.id));
+  }, []);
+
+  // if (!currentPlace) {
+  //   return <Navigate to="/*" />;
+  // }
+
+  if (isCurrentPlaceLoaded) {
+    return (<LoadingScreen />);
   }
 
   return (

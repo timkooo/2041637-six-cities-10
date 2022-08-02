@@ -15,4 +15,8 @@ export const changeSorting = createAction('main/changeСurrentSorting', (sorting
 
 export const loadPlaces = createAction<Hotel[]>('data/loadPlaces');
 
-export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
+export const setAreHotelsLoaded = createAction<boolean>('data/setAreHotelsLoaded');
+
+export const setCurrentPlace = createAction<Hotel>('data/setCurrentHotel');
+
+export const setIsCurrentPlaceLoaded = createAction<boolean>('data/isCurrentPlaceLoaded');

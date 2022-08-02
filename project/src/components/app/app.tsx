@@ -18,9 +18,9 @@ type AppProps = {
 };
 
 export const App: FC<AppProps> = ({ reviews, places }) => {
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
+  const AreHotelsLoaded = useAppSelector((state) => state.AreHotelsLoaded);
 
-  if (isDataLoaded) {
+  if (!AreHotelsLoaded) {
     return <LoadingScreen />;
   }
 

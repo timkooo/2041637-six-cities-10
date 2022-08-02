@@ -1,5 +1,6 @@
+//import { fetchPlaceById } from './api-actions';
 import { createReducer, createSelector } from '@reduxjs/toolkit';
-import { changeCity, changeSorting, loadPlaces, setDataLoadedStatus } from './action';
+import { changeCity, changeSorting, loadPlaces, setAreHotelsLoaded, setCurrentPlace, setIsCurrentPlaceLoaded } from './action';
 import { Cities } from '../const';
 import { getPlacesByCity } from '../utils';
 import { RootState } from '../types/store';
@@ -26,14 +27,18 @@ type InitialState = {
   places: Hotel[],
   currentCity: Cities,
   currentSorting: SortingTypes,
-  isDataLoaded: boolean,
+  AreHotelsLoaded: boolean,
+  isCurrentPlaceLoaded: boolean,
+  currentPlace: Hotel | Record<string, never>,
 }
 
 const initialState: InitialState = {
   places: [],
   currentCity: Cities.Paris,
   currentSorting: SortingTypes.Popular,
-  isDataLoaded: false,
+  AreHotelsLoaded: false,
+  isCurrentPlaceLoaded: false,
+  currentPlace: {},
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -47,7 +52,13 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loadPlaces, (state, action) => {
       state.places = action.payload;
     })
-    .addCase(setDataLoadedStatus, (state, action) => {
-      state.isDataLoaded = action.payload;
+    .addCase(setAreHotelsLoaded, (state, action) => {
+      state.AreHotelsLoaded = action.payload;
+    })
+    .addCase(setCurrentPlace, (state, action) => {
+      state.currentPlace = action.payload;
+    })
+    .addCase(setIsCurrentPlaceLoaded, (state, action) => {
+      state.AreHotelsLoaded = action.payload;
     });
 });
