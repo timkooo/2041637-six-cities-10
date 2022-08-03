@@ -17,7 +17,6 @@ export const Main = () => {
   const dispatch = useAppDispatch();
 
   const handleCityChange = (city: Cities) => {
-    console.log(city);
     dispatch(changeCity(city));
   };
 

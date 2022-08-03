@@ -1,4 +1,4 @@
-import { createReducer, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { Cities, NameSpace, SortingTypes } from '../../const';
 import { changeCity, changeSorting } from '../action';
 
