@@ -12,18 +12,32 @@ const initialState: InitialState = {
   currentSorting: SortingTypes.Popular,
 };
 
+// export const applicationSlice = createSlice({
+//   name: NameSpace.Application,
+//   initialState,
+//   reducers: {
+//     reducer: createReducer(initialState, (builder) => {
+//       builder
+//         .addCase(changeCity, (state, action) => {
+//           state.currentCity = action.payload.currentCity;
+//         })
+//         .addCase(changeSorting, (state, action) => {
+//           state.currentSorting = action.payload.currentSorting;
+//         });
+//     }),
+//   },
+// });
 export const applicationSlice = createSlice({
   name: NameSpace.Application,
   initialState,
-  reducers: {
-    reducer: createReducer(initialState, (builder) => {
-      builder
-        .addCase(changeCity, (state, action) => {
-          state.currentCity = action.payload.currentCity;
-        })
-        .addCase(changeSorting, (state, action) => {
-          state.currentSorting = action.payload.currentSorting;
-        });
-    }),
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(changeCity, (state, action) => {
+        state.currentCity = action.payload.currentCity;
+      })
+      .addCase(changeSorting, (state, action) => {
+        state.currentSorting = action.payload.currentSorting;
+      });
   },
 });
