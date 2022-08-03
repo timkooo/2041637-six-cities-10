@@ -52,3 +52,15 @@ export const sortingToFunction = {
   [SortingTypes.PriceHighToLow] : sortPriceHighToLow,
   [SortingTypes.TopRated] : sortRating,
 };
+
+export enum APIRoute {
+  Places = '/hotels',
+}
+
+export enum NameSpace {
+  Application = 'APPLICATION',
+  Comments = 'COMMENTS',
+  Places = 'PLACES',
+  Favorites = 'FAVORITES',
+  User = 'USER',
+}

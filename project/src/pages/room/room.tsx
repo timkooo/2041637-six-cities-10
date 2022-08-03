@@ -1,29 +1,35 @@
-import { FC, useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { CommentsForm } from '../../components/comments-form/comments-form';
 import { Map } from '../../components/map/map';
 import { Places } from '../../components/places/places';
 import { ReviewsList } from '../../components/reviews-list/reviews-list';
-import { AppRoutes, htmlClasses } from '../../const';
+import { AppRoutes, htmlClasses, NameSpace } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import { reviews } from '../../mocks/reviews';
-import { Hotel } from '../../types/hotel';
+import { loadPlaceById, loadNearestPlaces } from '../../store/api-actions';
 import { getRating } from '../../utils';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type RoomProps = {
-  places: Hotel[];
-};
-
-export const Room: FC<RoomProps> = ({ places }) => {
+export const Room = () => {
   const params = useParams();
-  const currentPlace = places.find(
-    (place) => place.id.toString() === params.id
-  );
-  const nearPlaces = places.filter((place) => place.id.toString() !== params.id);
+  const dispatch = useAppDispatch();
+  const currentPlace = useAppSelector((state) => state[NameSpace.Places].currentPlace);
+  const isCurrentPlaceLoaded = useAppSelector((state) => state[NameSpace.Places].isCurrentPlaceLoaded);
+  const nearestPlaces = useAppSelector((state) => state[NameSpace.Places].nearestPlaces);
+  const areNearestPlacesLoaded = useAppSelector((state) => state[NameSpace.Places].areNearestPlacesLoaded);
   const rating = currentPlace ? getRating(currentPlace.rating) : '0%';
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 
-  if (!currentPlace) {
-    return <Navigate to="/*" />;
+  useEffect(()=> {
+    if (params.id) {
+      dispatch(loadPlaceById(params.id));
+      dispatch(loadNearestPlaces(params.id));
+    }
+  }, [dispatch, params.id]);
+
+  if (!isCurrentPlaceLoaded || !areNearestPlacesLoaded) {
+    return (<LoadingScreen />);
   }
 
   return (
@@ -174,7 +180,7 @@ export const Room: FC<RoomProps> = ({ places }) => {
             </div>
           </div>
           <section className="property__map map">
-            <Map places={nearPlaces} selectedPlaceId={selectedPlaceId} />
+            <Map places={nearestPlaces} selectedPlaceId={selectedPlaceId} />
           </section>
         </section>
         <div className="container">
@@ -183,7 +189,7 @@ export const Room: FC<RoomProps> = ({ places }) => {
               Other places in the neighbourhood
             </h2>
             <Places
-              places={nearPlaces}
+              places={nearestPlaces}
               onCardFocusChange={setSelectedPlaceId}
               htmlPlacesClass={htmlClasses.near}
             />

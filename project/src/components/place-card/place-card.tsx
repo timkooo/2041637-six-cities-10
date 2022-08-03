@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import type { Hotel } from '../../types/hotel';
 import { getRating } from '../../utils';
 
@@ -15,6 +15,8 @@ type PlaceCardProps = {
 };
 
 export const PlaceCard: FC<PlaceCardProps> = (props) => {
+  const navigate = useNavigate();
+
   const {
     onCardFocusChange,
     place,
@@ -37,23 +39,25 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
     onCardFocusChange?.(null);
   };
 
+  const handleMouseClick = () => {
+    navigate(`./offer/${place.id}`);
+  };
+
   return (
-    <article className={classNames(rootPlaceCardClass, 'place-card')} onMouseOver={handleOnMouseOver} onMouseLeave={handleOnMouseLeave}>
+    <article className={`${rootPlaceCardClass} place-card`} onMouseOver={handleOnMouseOver} onMouseLeave={handleOnMouseLeave}>
       {place.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className={classNames(imageWrapperClass, 'place-card__image-wrapper')}>
-        <a href="#">
-          <img
-            className="place-card__image"
-            src={place.previewImage}
-            width="260"
-            height="200"
-            alt="Place image"
-          />
-        </a>
+        <img
+          className="place-card__image"
+          src={place.previewImage}
+          width="260"
+          height="200"
+          alt="Place"
+        />
       </div>
       <div className={`${placeCardInfoClass} place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -76,8 +80,8 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
             <span className="visually-hidden">{place.rating}</span>
           </div>
         </div>
-        <h2 className="place-card__name">
-          <Link to={`./offer/${place.id}`}>{place.description}</Link>
+        <h2 className="place-card__name" onClick={handleMouseClick}>
+          {place.description}
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>

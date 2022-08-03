@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { Places } from '../../components/places/places';
 import { Map } from '../../components/map/map';
-import { Cities, htmlClasses } from '../../const';
+import { Cities, htmlClasses, NameSpace } from '../../const';
 import { Link } from 'react-router-dom';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/application/application.slice';
 import { useAppSelector, useAppDispatch } from '../../hooks/rtkHooks';
-import { selectCurrentPlaces, selectCurrentSorting } from '../../store/reducer';
+import { selectCurrentPlaces } from '../../store/places/places.selectors';
+import { selectCurrentSorting } from '../../store/application/application.selectors';
 import { Sorting } from '../../components/sorting/sorting';
 
 export const Main = () => {
-  const currentCity = useAppSelector((state) => state.currentCity);
+  const currentCity = useAppSelector((state) => state[NameSpace.Application].currentCity);
   const currentPlaces = useAppSelector(selectCurrentPlaces);
   const currentSorting = useAppSelector(selectCurrentSorting);
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);

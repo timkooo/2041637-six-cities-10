@@ -39,3 +39,4 @@ export const formatDateDisplayValue = (date: string) =>
 
 export const formatDateAttribute = (date: string) =>
   new Date(date).toLocaleDateString('en-CA');
+

@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './components/app/app';
 import { places } from './mocks/places';
-import { store } from './store/store';
 import { Provider } from 'react-redux';
+import { store } from './store/store';
+import { loadPlaces } from './store/api-actions';
+
+store.dispatch(loadPlaces());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
