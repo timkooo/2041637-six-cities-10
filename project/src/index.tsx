@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './components/app/app';
 import { places } from './mocks/places';
-import { store } from './store/store';
 import { Provider } from 'react-redux';
-import { fetchPlacesAction } from './store/api-actions';
+import { api, store } from './store/store';
+import { loadPlaces, injectAPI } from './store/api-actions';
+injectAPI(api);
 
-store.dispatch(fetchPlacesAction());
+store.dispatch(loadPlaces());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

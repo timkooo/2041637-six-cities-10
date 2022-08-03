@@ -1,5 +1,4 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Hotel } from '../types/hotel';
 
 export const changeCity = createAction('main/changeCity', (city) => ({
   payload: {
@@ -12,11 +11,3 @@ export const changeSorting = createAction('main/changeСurrentSorting', (sorting
     currentSorting: sorting,
   }
 }));
-
-export const loadPlaces = createAction<Hotel[]>('data/loadPlaces');
-
-export const setAreHotelsLoaded = createAction<boolean>('data/setAreHotelsLoaded');
-
-export const setCurrentPlace = createAction<Hotel>('data/setCurrentHotel');
-
-export const setIsCurrentPlaceLoaded = createAction<boolean>('data/isCurrentPlaceLoaded');

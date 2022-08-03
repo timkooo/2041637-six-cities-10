@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoutes, AuthorizationStatus } from '../../const';
+import { AppRoutes, AuthorizationStatus, NameSpace } from '../../const';
 import { Favorites } from '../../pages/favorites/favorites';
 import { Login } from '../../pages/login/login';
 import { Main } from '../../pages/main/main';
@@ -18,9 +18,9 @@ type AppProps = {
 };
 
 export const App: FC<AppProps> = ({ reviews, places }) => {
-  const AreHotelsLoaded = useAppSelector((state) => state.AreHotelsLoaded);
+  const arePlacesLoaded = useAppSelector((state) => state[NameSpace.Places].arePlacesLoaded);
 
-  if (!AreHotelsLoaded) {
+  if (!arePlacesLoaded) {
     return <LoadingScreen />;
   }
 
