@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { App } from './components/app/app';
 import { places } from './mocks/places';
 import { Provider } from 'react-redux';
-import { api, store } from './store/store';
-import { loadPlaces, injectAPI } from './store/api-actions';
-injectAPI(api);
+import { store } from './store/store';
+import { loadPlaces } from './store/api-actions';
 
 store.dispatch(loadPlaces());
 

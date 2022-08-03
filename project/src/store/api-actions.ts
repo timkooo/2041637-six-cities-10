@@ -1,12 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
 import { APIRoute, NameSpace } from '../const';
 import { Hotel } from '../types/hotel';
-//import { api } from './store';
-
-let api: AxiosInstance;
-
-export const injectAPI = (_api: AxiosInstance) => { api = _api; };
+import { api } from '../services/api';
 
 export const loadPlaces = createAsyncThunk(`${NameSpace.Places}/loadPlaces`, async () => {
   const { data } = await api.get<Hotel[]>(APIRoute.Places);
@@ -14,9 +9,17 @@ export const loadPlaces = createAsyncThunk(`${NameSpace.Places}/loadPlaces`, asy
 });
 
 export const loadPlaceById = createAsyncThunk(
-  `${NameSpace.Places}/loadPlacesById`,
-  async (hotelId: string | undefined) => {
-    const { data } = await api.get<Hotel>(`${APIRoute.Places}/${hotelId}`);
+  `${NameSpace.Places}/loadPlaceById`,
+  async (placeId: string) => {
+    const { data } = await api.get<Hotel>(`${APIRoute.Places}/${placeId}`);
+    return data;
+  }
+);
+
+export const loadNearestPlaces = createAsyncThunk(
+  `${NameSpace.Places}/loadNearestPlaces`,
+  async (placeId: string) => {
+    const { data } = await api.get<Hotel[]>(`${APIRoute.Places}/${placeId}/nearby`);
     return data;
   }
 );

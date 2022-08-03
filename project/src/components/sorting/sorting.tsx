@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { SortingTypes } from '../../const';
 import { useAppDispatch } from '../../hooks/rtkHooks';
-import { changeSorting } from '../../store/action';
+import { changeSorting } from '../../store/application/application.slice';
 import classNames from 'classnames';
 
 const sortingOptions: { label : string, type : SortingTypes}[] = [

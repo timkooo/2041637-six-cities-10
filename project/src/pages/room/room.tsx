@@ -7,25 +7,28 @@ import { ReviewsList } from '../../components/reviews-list/reviews-list';
 import { AppRoutes, htmlClasses, NameSpace } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import { reviews } from '../../mocks/reviews';
-import { loadPlaceById } from '../../store/api-actions';
+import { loadPlaceById, loadNearestPlaces } from '../../store/api-actions';
 import { getRating } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 export const Room = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const places = useAppSelector((state) => state[NameSpace.Places].places);
   const currentPlace = useAppSelector((state) => state[NameSpace.Places].currentPlace);
   const isCurrentPlaceLoaded = useAppSelector((state) => state[NameSpace.Places].isCurrentPlaceLoaded);
-  const nearPlaces = places.filter((place) => place.id.toString() !== params.id);
+  const nearestPlaces = useAppSelector((state) => state[NameSpace.Places].nearestPlaces);
+  const areNearestPlacesLoaded = useAppSelector((state) => state[NameSpace.Places].areNearestPlacesLoaded);
   const rating = currentPlace ? getRating(currentPlace.rating) : '0%';
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 
   useEffect(()=> {
-    dispatch(loadPlaceById(params.id));
+    if (params.id) {
+      dispatch(loadPlaceById(params.id));
+      dispatch(loadNearestPlaces(params.id));
+    }
   }, [dispatch, params.id]);
 
-  if (!isCurrentPlaceLoaded) {
+  if (!isCurrentPlaceLoaded || !areNearestPlacesLoaded) {
     return (<LoadingScreen />);
   }
 
@@ -177,7 +180,7 @@ export const Room = () => {
             </div>
           </div>
           <section className="property__map map">
-            <Map places={nearPlaces} selectedPlaceId={selectedPlaceId} />
+            <Map places={nearestPlaces} selectedPlaceId={selectedPlaceId} />
           </section>
         </section>
         <div className="container">
@@ -186,7 +189,7 @@ export const Room = () => {
               Other places in the neighbourhood
             </h2>
             <Places
-              places={nearPlaces}
+              places={nearestPlaces}
               onCardFocusChange={setSelectedPlaceId}
               htmlPlacesClass={htmlClasses.near}
             />

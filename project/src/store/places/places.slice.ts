@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { Hotel } from '../../types/hotel';
-import { loadPlaces, loadPlaceById } from '../api-actions';
+import { loadPlaces, loadPlaceById, loadNearestPlaces } from '../api-actions';
 
 type InitialState = {
   places: Hotel[],
   arePlacesLoaded: boolean,
+  nearestPlaces: Hotel[],
+  areNearestPlacesLoaded: boolean,
   currentPlace: Hotel | Record<string, never>,
   isCurrentPlaceLoaded: boolean,
 }
@@ -13,6 +15,8 @@ type InitialState = {
 const initialState: InitialState = {
   places: [],
   arePlacesLoaded: false,
+  nearestPlaces: [],
+  areNearestPlacesLoaded: false,
   currentPlace: {},
   isCurrentPlaceLoaded: false,
 };
@@ -29,6 +33,13 @@ export const placesSlice = createSlice({
       })
       .addCase(loadPlaces.pending, (state, action) => {
         state.arePlacesLoaded = false;
+      })
+      .addCase(loadNearestPlaces.fulfilled, (state, action) => {
+        state.nearestPlaces = action.payload;
+        state.areNearestPlacesLoaded = true;
+      })
+      .addCase(loadNearestPlaces.pending, (state, action) => {
+        state.areNearestPlacesLoaded = false;
       })
       .addCase(loadPlaceById.fulfilled, (state, action) => {
         state.currentPlace = action.payload;
