@@ -1,12 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AppRoutes, NameSpace } from '../const';
+import { APIRoute, NameSpace } from '../const';
 import { Hotel } from '../types/hotel';
 import { api } from '../services/api';
 import { AuthData } from '../types/auth-data';
 import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
-import { redirectToRoute } from './action';
-import { AppDispatch } from '../types/store';
 
 export const loadPlaces = createAsyncThunk(
   `${NameSpace.Places}/loadPlaces`,
