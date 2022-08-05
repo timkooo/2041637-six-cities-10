@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { Hotel } from '../../types/hotel';
 import { getRating } from '../../utils';
 
@@ -81,7 +81,7 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
           </div>
         </div>
         <h2 className="place-card__name" onClick={handleMouseClick}>
-          {place.description}
+          <Link to={`./offer/${place.id}`}>{place.description}</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
