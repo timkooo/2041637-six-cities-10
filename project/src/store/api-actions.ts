@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, NameSpace } from '../const';
+import { APIRoute, AppRoutes, NameSpace } from '../const';
 import { Hotel } from '../types/hotel';
 import { api } from '../services/api';
 import { AuthData } from '../types/auth-data';
 import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
+import { redirectToRoute } from './action';
 
 export const loadPlaces = createAsyncThunk(
   `${NameSpace.Places}/loadPlaces`,
@@ -39,19 +40,15 @@ export const checkAuthAction = createAsyncThunk(
   }
 );
 
-export const loginAction = createAsyncThunk<
-  UserData,
-  AuthData
-  // {dispatch: AppDispatch}
->(`${NameSpace.User}/login`, async ({ login: email, password }, { dispatch }) => {
-  const { data } = await api.post<UserData>(APIRoute.Login, {
-    email,
-    password,
-  });
-  saveToken(data.token);
-  // dispatch(redirectToRoute(AppRoutes.Main));
-  return data;
-});
+export const loginAction = createAsyncThunk(
+  `${NameSpace.User}/login`,
+  async (login: AuthData, { dispatch }) => {
+    const { data } = await api.post<UserData>(APIRoute.Login, login);
+    saveToken(data.token);
+    dispatch(redirectToRoute(AppRoutes.Main));
+    return data;
+  }
+);
 
 export const logoutAction = createAsyncThunk(
   `${NameSpace.User}/logout`,

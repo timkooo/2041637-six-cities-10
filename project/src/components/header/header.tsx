@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks/rtkHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
+import { logoutAction } from '../../store/api-actions';
 import {
   selectAuthorizationStatus,
   selectUserData,
@@ -9,6 +10,11 @@ import {
 export const Header = () => {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const userData = useAppSelector(selectUserData);
+  const dispatch = useAppDispatch();
+
+  const handleLogoutClick = () => {
+    dispatch(logoutAction());
+  };
 
   return (
     <header className="header">
@@ -44,9 +50,9 @@ export const Header = () => {
                   </a>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link className="header__nav-link" to={AppRoutes.Main} onClick={handleLogoutClick}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>

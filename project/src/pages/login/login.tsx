@@ -19,7 +19,7 @@ export const Login = () => {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       onSubmit({
-        login: loginRef.current.value,
+        email: loginRef.current.value,
         password: passwordRef.current.value,
       });
     }

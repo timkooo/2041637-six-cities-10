@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus, NameSpace } from '../../const';
 import { Favorites } from '../../pages/favorites/favorites';
 import { Login } from '../../pages/login/login';
@@ -11,6 +11,8 @@ import { Comment } from '../../types/comment';
 import { FC } from 'react';
 import { useAppSelector } from '../../hooks/rtkHooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import HistoryRouter from '../../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   reviews?: Comment[];
@@ -25,7 +27,7 @@ export const App: FC<AppProps> = ({ reviews, places }) => {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoutes.Main} element={<Main />} />
         <Route
@@ -40,6 +42,6 @@ export const App: FC<AppProps> = ({ reviews, places }) => {
         <Route path={AppRoutes.Room} element={<Room />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 };
