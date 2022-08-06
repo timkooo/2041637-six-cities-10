@@ -23,7 +23,7 @@ export const Places: FC<PlacesProps> = ({
 }) => (
   <div
     className={classNames(htmlPlacesClass.class, 'places__list', {
-      tabs__content: htmlPlacesClass.class === 'cities__places-list',
+      'tabs__content': htmlPlacesClass.class === 'cities__places-list',
     })}
   >
     {places.map((place: Place) => (
