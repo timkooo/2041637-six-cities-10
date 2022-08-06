@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { PlaceCard } from '../../components/place-card/place-card';
-import type { Hotel } from '../../types/hotel';
+import type { Place } from '../../types/hotel';
 
 type FavoritesProps = {
-  places: Hotel[];
+  places: Place[];
 };
 
 export const Favorites: FC<FavoritesProps> = ({ places }) => (
@@ -61,7 +61,7 @@ export const Favorites: FC<FavoritesProps> = ({ places }) => (
                 </div>
               </div>
               <div className="favorites__places">
-                {places.map((place: Hotel) => (
+                {places.map((place: Place) => (
                   <PlaceCard
                     place={place}
                     key={place.id}

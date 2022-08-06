@@ -55,6 +55,8 @@ export const sortingToFunction = {
 
 export enum APIRoute {
   Places = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export enum NameSpace {

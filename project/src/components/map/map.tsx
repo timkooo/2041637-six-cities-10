@@ -1,10 +1,10 @@
 import { FC, useEffect, useRef } from 'react';
 import { Marker, Icon, LayerGroup } from 'leaflet';
-import { Hotel } from '../../types/hotel';
+import { Place } from '../../types/hotel';
 import { useMap } from '../../hooks/useMap';
 
 type MapProps = {
-  places: Hotel[];
+  places: Place[];
   selectedPlaceId: number | null;
 };
 
@@ -46,10 +46,14 @@ export const Map: FC<MapProps> = ({ places, selectedPlaceId }) => {
 
   useEffect(() => {
     if (map) {
-      map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom, {
-        animate: true,
-        duration: 0.9
-      });
+      map.flyTo(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom,
+        {
+          animate: true,
+          duration: 0.9,
+        }
+      );
     }
   }, [map, city]);
 

@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import {AppRoutes} from '../const';
 
 export const changeCity = createAction('main/changeCity', (city) => ({
   payload: {
@@ -11,3 +12,5 @@ export const changeSorting = createAction('main/changeСurrentSorting', (sorting
     currentSorting: sorting,
   }
 }));
+
+export const redirectToRoute = createAction<AppRoutes>('application/redirectToRoute');

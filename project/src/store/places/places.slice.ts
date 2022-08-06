@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { Hotel } from '../../types/hotel';
+import { Place } from '../../types/hotel';
 import { loadPlaces, loadPlaceById, loadNearestPlaces } from '../api-actions';
 
 type InitialState = {
-  places: Hotel[],
-  arePlacesLoaded: boolean,
-  nearestPlaces: Hotel[],
-  areNearestPlacesLoaded: boolean,
-  currentPlace: Hotel | Record<string, never>,
-  isCurrentPlaceLoaded: boolean,
-}
+  places: Place[];
+  arePlacesLoaded: boolean;
+  nearestPlaces: Place[];
+  areNearestPlacesLoaded: boolean;
+  currentPlace: Place | Record<string, never>;
+  isCurrentPlaceLoaded: boolean;
+};
 
 const initialState: InitialState = {
   places: [],

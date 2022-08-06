@@ -1,17 +1,18 @@
-import { Hotel } from '../types/hotel';
+import { Place } from '../types/hotel';
 
-export const places: Hotel[] = [
+export const places: Place[] = [
   {
     bedrooms: 3,
     city: {
       location: {
         latitude: 52.377956,
-        longitude: 4.897070,
+        longitude: 4.89707,
         zoom: 12,
       },
       name: 'Amsterdam',
     },
-    description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
+    description:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
     goods: ['Heating', 'WiFi', 'Kitchen'],
     host: {
       avatarUrl: 'http://picsum.photos/300/200?random=4',
@@ -20,7 +21,11 @@ export const places: Hotel[] = [
       name: 'Tiffany',
     },
     id: 1,
-    images: ['http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4'],
+    images: [
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+    ],
     isFavorite: true,
     isPremium: true,
     location: {
@@ -40,12 +45,13 @@ export const places: Hotel[] = [
     city: {
       location: {
         latitude: 52.377956,
-        longitude: 4.897070,
+        longitude: 4.89707,
         zoom: 12,
       },
       name: 'Amsterdam',
     },
-    description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
+    description:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
     goods: ['Heating', 'Cable TV', 'Kitchen', 'WiFi'],
     host: {
       avatarUrl: 'http://picsum.photos/300/200?random=4',
@@ -54,7 +60,11 @@ export const places: Hotel[] = [
       name: 'Sam',
     },
     id: 2,
-    images: ['http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4'],
+    images: [
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+    ],
     isFavorite: false,
     isPremium: true,
     location: {
@@ -74,12 +84,13 @@ export const places: Hotel[] = [
     city: {
       location: {
         latitude: 52.377956,
-        longitude: 4.897070,
+        longitude: 4.89707,
         zoom: 12,
       },
       name: 'Amsterdam',
     },
-    description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
+    description:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
     goods: ['Cable TV', 'Wifi', 'Kitchen'],
     host: {
       avatarUrl: 'http://picsum.photos/300/200?random=4',
@@ -88,7 +99,11 @@ export const places: Hotel[] = [
       name: 'Monika',
     },
     id: 3,
-    images: ['http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4'],
+    images: [
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+    ],
     isFavorite: true,
     isPremium: false,
     location: {
@@ -108,12 +123,13 @@ export const places: Hotel[] = [
     city: {
       location: {
         latitude: 52.377956,
-        longitude: 4.897070,
+        longitude: 4.89707,
         zoom: 12,
       },
       name: 'Amsterdam',
     },
-    description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
+    description:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
     goods: ['Heating'],
     host: {
       avatarUrl: 'http://picsum.photos/300/200?random=4',
@@ -122,7 +138,11 @@ export const places: Hotel[] = [
       name: 'Chan',
     },
     id: 4,
-    images: ['http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4'],
+    images: [
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+    ],
     isFavorite: false,
     isPremium: false,
     location: {
@@ -147,7 +167,8 @@ export const places: Hotel[] = [
       },
       name: 'Paris',
     },
-    description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
+    description:
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias, vitae? Asperiores maxime autem adipisci fuga eum! Praesentium magnam suscipit dignissimos ipsum ex ducimus, exercitationem quam corrupti qui illum neque vero placeat unde quasi. Vero repellat modi alias deleniti quas non a, error sunt ad in, rem incidunt nulla eligendi sapiente.',
     goods: ['Heating'],
     host: {
       avatarUrl: 'http://picsum.photos/300/200?random=4',
@@ -156,7 +177,11 @@ export const places: Hotel[] = [
       name: 'Chan',
     },
     id: 4,
-    images: ['http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4', 'http://picsum.photos/300/200?random=4'],
+    images: [
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+      'http://picsum.photos/300/200?random=4',
+    ],
     isFavorite: false,
     isPremium: false,
     location: {

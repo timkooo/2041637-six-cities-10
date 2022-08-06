@@ -4,9 +4,10 @@ import { App } from './components/app/app';
 import { places } from './mocks/places';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import { loadPlaces } from './store/api-actions';
+import { checkAuthAction, loadPlaces } from './store/api-actions';
 
 store.dispatch(loadPlaces());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
