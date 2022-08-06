@@ -1,10 +1,11 @@
-import { Hotel } from './types/hotel';
+import { Place } from './types/hotel';
 
-export const getRating = (rating : number) : string => `${rating / 5 * 100}%`;
+export const getRating = (rating: number): string => `${(rating / 5) * 100}%`;
 
-export const getPlacesByCity = (city: string, places: Hotel[]) => places.filter((place) => place.city.name === city);
+export const getPlacesByCity = (city: string, places: Place[]) =>
+  places.filter((place) => place.city.name === city);
 
-export const sortPriceLowToHigh = (placeA: Hotel, placeB: Hotel) => {
+export const sortPriceLowToHigh = (placeA: Place, placeB: Place) => {
   if (placeA.price < placeB.price) {
     return -1;
   }
@@ -14,7 +15,7 @@ export const sortPriceLowToHigh = (placeA: Hotel, placeB: Hotel) => {
   return 0;
 };
 
-export const sortPriceHighToLow = (placeA: Hotel, placeB: Hotel) => {
+export const sortPriceHighToLow = (placeA: Place, placeB: Place) => {
   if (placeA.price > placeB.price) {
     return -1;
   }
@@ -24,7 +25,7 @@ export const sortPriceHighToLow = (placeA: Hotel, placeB: Hotel) => {
   return 0;
 };
 
-export const sortRating = (placeA: Hotel, placeB: Hotel) => {
+export const sortRating = (placeA: Place, placeB: Place) => {
   if (placeA.rating > placeB.rating) {
     return -1;
   }
@@ -35,8 +36,10 @@ export const sortRating = (placeA: Hotel, placeB: Hotel) => {
 };
 
 export const formatDateDisplayValue = (date: string) =>
-  new Date(date).toLocaleDateString('en-US', {year: 'numeric', month: 'long'});
+  new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+  });
 
 export const formatDateAttribute = (date: string) =>
   new Date(date).toLocaleDateString('en-CA');
-

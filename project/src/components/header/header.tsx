@@ -50,9 +50,13 @@ export const Header = () => {
                   </a>
                 </li>
                 <li className="header__nav-item">
-                  <Link className="header__nav-link" to={AppRoutes.Main} onClick={handleLogoutClick}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
+                  <span
+                    className="header__signout"
+                    style={{ cursor: 'pointer' }}
+                    onClick={handleLogoutClick}
+                  >
+                    Sign out
+                  </span>
                 </li>
               </ul>
             </nav>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute, AppRoutes, NameSpace } from '../const';
-import { Hotel } from '../types/hotel';
+import { Place } from '../types/hotel';
 import { api } from '../services/api';
 import { AuthData } from '../types/auth-data';
 import { dropToken, saveToken } from '../services/token';
@@ -10,7 +10,7 @@ import { redirectToRoute } from './action';
 export const loadPlaces = createAsyncThunk(
   `${NameSpace.Places}/loadPlaces`,
   async () => {
-    const { data } = await api.get<Hotel[]>(APIRoute.Places);
+    const { data } = await api.get<Place[]>(APIRoute.Places);
     return data;
   }
 );
@@ -18,7 +18,7 @@ export const loadPlaces = createAsyncThunk(
 export const loadPlaceById = createAsyncThunk(
   `${NameSpace.Places}/loadPlaceById`,
   async (placeId: string) => {
-    const { data } = await api.get<Hotel>(`${APIRoute.Places}/${placeId}`);
+    const { data } = await api.get<Place>(`${APIRoute.Places}/${placeId}`);
     return data;
   }
 );
@@ -26,7 +26,7 @@ export const loadPlaceById = createAsyncThunk(
 export const loadNearestPlaces = createAsyncThunk(
   `${NameSpace.Places}/loadNearestPlaces`,
   async (placeId: string) => {
-    const { data } = await api.get<Hotel[]>(
+    const { data } = await api.get<Place[]>(
       `${APIRoute.Places}/${placeId}/nearby`
     );
     return data;
@@ -36,7 +36,7 @@ export const loadNearestPlaces = createAsyncThunk(
 export const checkAuthAction = createAsyncThunk(
   `${NameSpace.User}/checkAuth`,
   async () => {
-    await api.get<Hotel>(APIRoute.Login);
+    await api.get(APIRoute.Login);
   }
 );
 
