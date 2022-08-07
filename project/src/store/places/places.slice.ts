@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { Place } from '../../types/hotel';
+import { Place } from '../../types/place';
 import { loadPlaces, loadPlaceById, loadNearestPlaces } from '../api-actions';
 
 type InitialState = {
@@ -8,7 +8,7 @@ type InitialState = {
   arePlacesLoaded: boolean;
   nearestPlaces: Place[];
   areNearestPlacesLoaded: boolean;
-  currentPlace: Place | Record<string, never>;
+  currentPlace: Place | null;
   isCurrentPlaceLoaded: boolean;
 };
 
@@ -17,7 +17,7 @@ const initialState: InitialState = {
   arePlacesLoaded: false,
   nearestPlaces: [],
   areNearestPlacesLoaded: false,
-  currentPlace: {},
+  currentPlace: null,
   isCurrentPlaceLoaded: false,
 };
 

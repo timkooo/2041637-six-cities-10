@@ -1,4 +1,4 @@
-import { Place } from '../../types/hotel';
+import { Place } from '../../types/place';
 import { FC } from 'react';
 import { PlaceCard } from '../place-card/place-card';
 import classNames from 'classnames';

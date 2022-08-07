@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import type { Place } from '../../types/hotel';
+import type { Place } from '../../types/place';
 import { getRating } from '../../utils';
 
 type PlaceCardProps = {
@@ -82,7 +82,7 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`./offer/${place.id}`}>{place.description}</Link>
+          <Link to={`/offer/${place.id}`}>{place.description}</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>

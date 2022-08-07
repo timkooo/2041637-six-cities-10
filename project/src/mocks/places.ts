@@ -1,4 +1,4 @@
-import { Place } from '../types/hotel';
+import { Place } from '../types/place';
 
 export const places: Place[] = [
   {

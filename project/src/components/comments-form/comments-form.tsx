@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
+import { useAppDispatch } from '../../hooks/rtkHooks';
+import { postCommentAction } from '../../store/api-actions';
+import { CommentData } from '../../types/comment-data';
 
-const ratingConfig = {
-  5: 'perfect',
-  4: 'good',
-  3: 'not bad',
-  2: 'badly',
-  1: 'terribly',
+type CommentsFormProps = {
+  id: string;
 };
 
-export const CommentsForm = () => {
-  const [formData, setFormData] = React.useState({
-    rating: '',
-    review: '',
+const ratingConfig = {
+  1: 'terribly',
+  2: 'badly',
+  3: 'not bad',
+  4: 'good',
+  5: 'perfect',
+};
+
+export const CommentsForm: FC<CommentsFormProps> = ({ id }) => {
+  const placeId = id;
+  const dispatch = useAppDispatch();
+
+  const [formData, setFormData] = useState<CommentData>({
+    comment: '',
+    rating: 0,
   });
+
+  const isSubmitDisabled = !(formData.comment && formData.rating);
 
   const handleInputRaiting = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
@@ -24,17 +36,19 @@ export const CommentsForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // eslint-disable-next-line no-console
-  console.log(formData);
+  const handleFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(postCommentAction({ formData, placeId }));
+  };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
         {Object.entries(ratingConfig).map(([stars, title]) => (
-          <>
+          <React.Fragment key={stars}>
             <input
               className="form__rating-input visually-hidden"
               name="rating"
@@ -52,13 +66,13 @@ export const CommentsForm = () => {
                 <use xlinkHref="#icon-star"></use>
               </svg>
             </label>
-          </>
+          </React.Fragment>
         ))}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleInputReview}
       >
@@ -72,7 +86,7 @@ export const CommentsForm = () => {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={isSubmitDisabled}
         >
           Submit
         </button>

@@ -6,12 +6,12 @@ import { Main } from '../../pages/main/main';
 import { PageNotFound } from '../../pages/page-not-found/page-not-found';
 import { Room } from '../../pages/room/room';
 import { PrivateRoute } from '../private-route/private-route';
-import { Place } from '../../types/hotel';
+import { Place } from '../../types/place';
 import { Comment } from '../../types/comment';
 import { FC } from 'react';
 import { useAppSelector } from '../../hooks/rtkHooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import HistoryRouter from '../../history-route/history-route';
+import { HistoryRouter } from '../../history-router/history-router';
 import browserHistory from '../../browser-history';
 
 type AppProps = {
