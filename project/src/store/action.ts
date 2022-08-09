@@ -1,13 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
 import {AppRoutes} from '../const';
 
-export const changeCity = createAction('main/changeCity', (city) => ({
+export const changeCity = createAction('application/changeCity', (city) => ({
   payload: {
     currentCity: city,
   }
 }));
 
-export const changeSorting = createAction('main/changeСurrentSorting', (sorting) => ({
+export const changeSorting = createAction('application/changeСurrentSorting', (sorting) => ({
   payload: {
     currentSorting: sorting,
   }

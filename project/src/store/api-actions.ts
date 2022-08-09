@@ -38,7 +38,8 @@ export const loadNearestPlaces = createAsyncThunk(
 export const checkAuthAction = createAsyncThunk(
   `${NameSpace.User}/checkAuth`,
   async () => {
-    await api.get(APIRoute.Login);
+    const { data } = await api.get<UserData>(APIRoute.Login);
+    return data;
   }
 );
 

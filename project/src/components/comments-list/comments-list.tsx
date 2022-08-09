@@ -1,7 +1,7 @@
 import { CommentItem } from '../comment-item/comment-item';
 import { CommentsForm } from '../comments-form/comments-form';
 import { useAppSelector } from '../../hooks/rtkHooks';
-import { selectAreCommentsLoaded, selectComments } from '../../store/comments/comments.selectors';
+import { selectAreCommentsLoaded, selectSortedComments } from '../../store/comments/comments.selectors';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import { AuthorizationStatus } from '../../const';
 import { FC } from 'react';
@@ -11,7 +11,7 @@ type CommentsListProps = {
 }
 
 export const CommentsList: FC<CommentsListProps> = ({placeId}) => {
-  const comments = useAppSelector(selectComments).slice(-10).reverse();
+  const comments = useAppSelector(selectSortedComments);
   const areCommentsLoaded = useAppSelector(selectAreCommentsLoaded);
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 

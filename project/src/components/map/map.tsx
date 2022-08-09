@@ -21,7 +21,9 @@ export const Map: FC<MapProps> = ({ places, currentPlace, selectedPlaceId }) => 
   const city = places[0].city;
   const mapRef = useRef<HTMLDivElement>(null);
   const map = useMap(mapRef, city);
-  if (currentPlace) { places = [...places, currentPlace]; }
+  if (currentPlace) {
+    places = [...places, currentPlace];
+  }
 
   useEffect(() => {
     if (map) {

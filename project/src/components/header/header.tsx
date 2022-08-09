@@ -32,7 +32,21 @@ export const Header = () => {
             </Link>
           </div>
 
-          {authorizationStatus === AuthorizationStatus.Auth && userData ? (
+          {authorizationStatus === AuthorizationStatus.NoAuth && !userData ? (
+            <nav className="header__nav">
+              <ul className="header__nav-list">
+                <li className="header__nav-item user">
+                  <Link
+                    className="header__nav-link header__nav-link--profile"
+                    to={`/${AppRoutes.Login}`}
+                  >
+                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                    <span className="header__login">Sign in</span>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          ) : (
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
@@ -41,10 +55,10 @@ export const Header = () => {
                     href="#"
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper">
-                      <img src={userData.avatarUrl} alt="User Avatar" />
+                      <img src={userData?.avatarUrl} alt="User Avatar" />
                     </div>
                     <span className="header__user-name user__name">
-                      {userData.email}
+                      {userData?.email}
                     </span>
                     <span className="header__favorite-count">3</span>
                   </a>
@@ -57,20 +71,6 @@ export const Header = () => {
                   >
                     Sign out
                   </span>
-                </li>
-              </ul>
-            </nav>
-          ) : (
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link
-                    className="header__nav-link header__nav-link--profile"
-                    to={`/${AppRoutes.Login}`}
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__login">Sign in</span>
-                  </Link>
                 </li>
               </ul>
             </nav>
