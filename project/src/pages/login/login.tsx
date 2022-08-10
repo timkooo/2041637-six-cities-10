@@ -1,9 +1,11 @@
 import { FormEvent, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AppRoutes } from '../../const';
 import { useAppDispatch } from '../../hooks/rtkHooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
+
 
 export const Login = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -18,6 +20,14 @@ export const Login = () => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      if (!/^[a-zA-Z]+@[a-zA-Z]+\.[a-z]+$/.test(loginRef.current.value)) {
+        toast.warn('Login is not valid');
+        return;
+      }
+      if (!/(?=.*\d)(?=.*[a-zA-Z])/.test(passwordRef.current.value)) {
+        toast.warn('Password is not valid');
+        return;
+      }
       onSubmit({
         email: loginRef.current.value,
         password: passwordRef.current.value,

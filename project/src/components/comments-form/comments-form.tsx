@@ -1,66 +1,94 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
+import { useAppDispatch } from '../../hooks/rtkHooks';
+import { postCommentAction } from '../../store/api-actions';
+import { CommentData } from '../../types/comment-data';
 
-const ratingConfig = {
-  5: 'perfect',
-  4: 'good',
-  3: 'not bad',
-  2: 'badly',
-  1: 'terribly',
+type CommentsFormProps = {
+  id: string;
 };
 
-export const CommentsForm = () => {
-  const [formData, setFormData] = React.useState({
+const ratingConfig = [
+  { rating: '5', value: 'perfect' },
+  { rating: '4', value: 'good' },
+  { rating: '3', value: 'not bad' },
+  { rating: '2', value: 'badly' },
+  { rating: '1', value: 'terribly' },
+];
+
+const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
+  const dispatch = useAppDispatch();
+  const [formDisableState, setFormDisableState] = useState<boolean>(false);
+
+  const [formData, setFormData] = useState<CommentData>({
     rating: '',
-    review: '',
+    comment: '',
   });
 
-  const handleInputRaiting = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const isSubmitDisabled = !(formData.comment && formData.rating);
+
+  const handleFormChange = (
+    evt:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const { name, value } = evt.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleInputReview = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = evt.target;
-    setFormData({ ...formData, [name]: value });
+  const handleFormSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    setFormDisableState(true);
+    await dispatch(postCommentAction({ formData, placeId }));
+    setFormDisableState(false);
+    setFormData({
+      rating: '',
+      comment: '',
+    });
   };
-
-  // eslint-disable-next-line no-console
-  console.log(formData);
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={handleFormSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {Object.entries(ratingConfig).map(([stars, title]) => (
-          <>
+        {ratingConfig.map((rating) => (
+          <React.Fragment key={rating.rating}>
             <input
               className="form__rating-input visually-hidden"
+              checked={rating.rating === formData.rating}
               name="rating"
-              value={stars}
-              id={`${stars}-stars`}
+              value={rating.rating}
+              id={`${rating.rating}-stars`}
               type="radio"
-              onChange={handleInputRaiting}
+              disabled={formDisableState}
+              onChange={handleFormChange}
             />
             <label
-              htmlFor={`${stars}-stars`}
+              htmlFor={`${rating.rating}-stars`}
               className="reviews__rating-label form__rating-label"
-              title={title}
+              title={rating.value}
             >
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>
               </svg>
             </label>
-          </>
+          </React.Fragment>
         ))}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
+        value={formData.comment}
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleInputReview}
+        onChange={handleFormChange}
+        disabled={formDisableState}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -72,7 +100,7 @@ export const CommentsForm = () => {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={isSubmitDisabled}
         >
           Submit
         </button>
@@ -80,3 +108,5 @@ export const CommentsForm = () => {
     </form>
   );
 };
+
+export default React.memo(CommentsForm);

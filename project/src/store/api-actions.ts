@@ -1,11 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute, AppRoutes, NameSpace } from '../const';
-import { Place } from '../types/hotel';
+import { Place } from '../types/place';
 import { api } from '../services/api';
 import { AuthData } from '../types/auth-data';
 import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
 import { redirectToRoute } from './action';
+import { Comment } from '../types/comment';
+import { CommentData } from '../types/comment-data';
 
 export const loadPlaces = createAsyncThunk(
   `${NameSpace.Places}/loadPlaces`,
@@ -36,7 +38,8 @@ export const loadNearestPlaces = createAsyncThunk(
 export const checkAuthAction = createAsyncThunk(
   `${NameSpace.User}/checkAuth`,
   async () => {
-    await api.get(APIRoute.Login);
+    const { data } = await api.get<UserData>(APIRoute.Login);
+    return data;
   }
 );
 
@@ -55,5 +58,23 @@ export const logoutAction = createAsyncThunk(
   async () => {
     await api.delete(APIRoute.Logout);
     dropToken();
+  }
+);
+
+export const loadCommentsByPlaceId = createAsyncThunk(
+  `${NameSpace.Comments}/loadCommentsByPlaceId`,
+  async (placeId: string) => {
+    const { data } = await api.get<Comment[]>(
+      `${APIRoute.Comments}/${placeId}`
+    );
+    return data;
+  }
+);
+
+export const postCommentAction = createAsyncThunk(
+  `${NameSpace.Comments}/postComment`,
+  async ({formData, placeId} : {formData : CommentData, placeId: string}) => {
+    const { data } = await api.post<Comment[]>(`${APIRoute.Comments}/${placeId}`, formData);
+    return data;
   }
 );

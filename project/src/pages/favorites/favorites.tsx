@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { PlaceCard } from '../../components/place-card/place-card';
-import type { Place } from '../../types/hotel';
+import type { Place } from '../../types/place';
 
 type FavoritesProps = {
   places: Place[];

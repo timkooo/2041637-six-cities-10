@@ -5,6 +5,7 @@ export enum AppRoutes {
   Login = 'login',
   Favorites = 'favorites',
   Room = 'offer/:id',
+  PageNotFound = '/*',
 }
 
 export enum AuthorizationStatus {
@@ -57,6 +58,7 @@ export enum APIRoute {
   Places = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments'
 }
 
 export enum NameSpace {

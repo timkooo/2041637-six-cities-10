@@ -1,4 +1,4 @@
-import { Place } from './types/hotel';
+import { Place } from './types/place';
 
 export const getRating = (rating: number): string => `${(rating / 5) * 100}%`;
 
