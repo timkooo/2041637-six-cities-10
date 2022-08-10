@@ -4,24 +4,39 @@ import { Header } from '../../components/header/header';
 import { Map } from '../../components/map/map';
 import { Places } from '../../components/places/places';
 import { CommentsList } from '../../components/comments-list/comments-list';
-import { htmlClasses, NameSpace } from '../../const';
+import { AuthorizationStatus, htmlClasses, NameSpace } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
-import { loadPlaceById, loadNearestPlaces, loadCommentsByPlaceId } from '../../store/api-actions';
+import {
+  loadPlaceById,
+  loadNearestPlaces,
+  loadCommentsByPlaceId,
+} from '../../store/api-actions';
 import { getRating } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { PageNotFound } from '../page-not-found/page-not-found';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
+import CommentsForm from '../../components/comments-form/comments-form';
 
 export const Room = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const currentPlace = useAppSelector((state) => state[NameSpace.Places].currentPlace);
-  const isCurrentPlaceLoaded = useAppSelector((state) => state[NameSpace.Places].isCurrentPlaceLoaded);
-  const nearestPlaces = useAppSelector((state) => state[NameSpace.Places].nearestPlaces);
-  const areNearestPlacesLoaded = useAppSelector((state) => state[NameSpace.Places].areNearestPlacesLoaded);
+  const currentPlace = useAppSelector(
+    (state) => state[NameSpace.Places].currentPlace
+  );
+  const isCurrentPlaceLoaded = useAppSelector(
+    (state) => state[NameSpace.Places].isCurrentPlaceLoaded
+  );
+  const nearestPlaces = useAppSelector(
+    (state) => state[NameSpace.Places].nearestPlaces
+  );
+  const areNearestPlacesLoaded = useAppSelector(
+    (state) => state[NameSpace.Places].areNearestPlacesLoaded
+  );
   const rating = currentPlace ? getRating(currentPlace.rating) : '0%';
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (params.id) {
       dispatch(loadPlaceById(params.id));
       dispatch(loadNearestPlaces(params.id));
@@ -30,16 +45,15 @@ export const Room = () => {
   }, [dispatch, params.id]);
 
   if (!isCurrentPlaceLoaded || !areNearestPlacesLoaded) {
-    return (<LoadingScreen />);
+    return <LoadingScreen />;
   }
 
   if (!currentPlace || !params.id) {
-    return (<PageNotFound />);
+    return <PageNotFound />;
   }
 
   return (
     <div className="page">
-
       <Header />
 
       <main className="page__main page__main--property">
@@ -48,11 +62,7 @@ export const Room = () => {
             <div className="property__gallery">
               {currentPlace.images.map((image) => (
                 <div key={image} className="property__image-wrapper">
-                  <img
-                    className="property__image"
-                    src={image}
-                    alt="Studio"
-                  />
+                  <img className="property__image" src={image} alt="Studio" />
                 </div>
               ))}
             </div>
@@ -146,11 +156,20 @@ export const Room = () => {
                   <p className="property__text">{currentPlace.description}</p>
                 </div>
               </div>
-              <CommentsList placeId={params.id}/>
+              <section className="property__reviews reviews">
+                <CommentsList />
+                {authorizationStatus === AuthorizationStatus.Auth && (
+                  <CommentsForm id={params.id} />
+                )}
+              </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map places={nearestPlaces} selectedPlaceId={selectedPlaceId} currentPlace={currentPlace}/>
+            <Map
+              places={nearestPlaces}
+              selectedPlaceId={selectedPlaceId}
+              currentPlace={currentPlace}
+            />
           </section>
         </section>
         <div className="container">

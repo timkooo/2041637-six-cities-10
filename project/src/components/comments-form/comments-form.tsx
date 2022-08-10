@@ -15,7 +15,7 @@ const ratingConfig = [
   { rating: '1', value: 'terribly' },
 ];
 
-export const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
+const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
   const dispatch = useAppDispatch();
   const [formDisableState, setFormDisableState] = useState<boolean>(false);
 
@@ -35,11 +35,15 @@ export const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setFormDisableState(true);
-    dispatch(postCommentAction({ formData, placeId }));
+    await dispatch(postCommentAction({ formData, placeId }));
     setFormDisableState(false);
+    setFormData({
+      rating: '',
+      comment: '',
+    });
   };
 
   return (
@@ -81,6 +85,7 @@ export const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
         className="reviews__textarea form__textarea"
         id="review"
         name="comment"
+        value={formData.comment}
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleFormChange}
         disabled={formDisableState}
@@ -103,3 +108,5 @@ export const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
     </form>
   );
 };
+
+export default React.memo(CommentsForm);

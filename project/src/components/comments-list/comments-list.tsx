@@ -1,26 +1,20 @@
 import { CommentItem } from '../comment-item/comment-item';
-import { CommentsForm } from '../comments-form/comments-form';
 import { useAppSelector } from '../../hooks/rtkHooks';
-import { selectAreCommentsLoaded, selectSortedComments } from '../../store/comments/comments.selectors';
-import { selectAuthorizationStatus } from '../../store/user/user.selectors';
-import { AuthorizationStatus } from '../../const';
-import { FC } from 'react';
+import {
+  selectAreCommentsLoaded,
+  selectSortedComments,
+} from '../../store/comments/comments.selectors';
 
-type CommentsListProps = {
-  placeId: string;
-}
-
-export const CommentsList: FC<CommentsListProps> = ({placeId}) => {
+export const CommentsList = () => {
   const comments = useAppSelector(selectSortedComments);
   const areCommentsLoaded = useAppSelector(selectAreCommentsLoaded);
-  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
   if (!areCommentsLoaded) {
-    return (<section className="property__reviews reviews">Loading comments . . .</section>);
+    return <p>Loading comments . . .</p>;
   }
 
   return (
-    <section className="property__reviews reviews">
+    <>
       <h2 className="reviews__title">
         Reviews &middot;{' '}
         <span className="reviews__amount">{comments.length}</span>
@@ -31,7 +25,6 @@ export const CommentsList: FC<CommentsListProps> = ({placeId}) => {
           <CommentItem key={comment.id} comment={comment} />
         ))}
       </ul>
-      {authorizationStatus === AuthorizationStatus.Auth && <CommentsForm id={placeId}/>}
-    </section>
+    </>
   );
 };
