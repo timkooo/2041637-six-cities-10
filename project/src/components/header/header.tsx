@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import { logoutAction } from '../../store/api-actions';
+import { selectFavoritesNumber } from '../../store/favorites/favorites.selectors';
 import {
   selectAuthorizationStatus,
   selectUserData,
@@ -9,6 +10,7 @@ import {
 
 export const Header = () => {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const favoritesNumber = useAppSelector(selectFavoritesNumber);
   const userData = useAppSelector(selectUserData);
   const dispatch = useAppDispatch();
 
@@ -50,9 +52,8 @@ export const Header = () => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
+                  <Link to={`/${AppRoutes.Favorites}`}
                     className="header__nav-link header__nav-link--profile"
-                    href="#"
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                       <img src={userData?.avatarUrl} alt="User Avatar" />
@@ -60,8 +61,8 @@ export const Header = () => {
                     <span className="header__user-name user__name">
                       {userData?.email}
                     </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
+                    <span className="header__favorite-count">{favoritesNumber}</span>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
                   <span

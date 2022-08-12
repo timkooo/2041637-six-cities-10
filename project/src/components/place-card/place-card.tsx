@@ -1,6 +1,10 @@
 import classNames from 'classnames';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppRoutes, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
+import { changeFavoriteStatus } from '../../store/api-actions';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import type { Place } from '../../types/place';
 import { getRating } from '../../utils';
 
@@ -15,7 +19,10 @@ type PlaceCardProps = {
 };
 
 export const PlaceCard: FC<PlaceCardProps> = (props) => {
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const { onCardFocusChange, place, htmlClasses } = props;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     rootPlaceCardClass = '',
@@ -31,6 +38,15 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
 
   const handleOnMouseLeave = () => {
     onCardFocusChange?.(null);
+  };
+
+  const handleBookmarkButtonClick = (evt: React.MouseEvent<HTMLButtonElement>, placeId: number, favoriteStatus: number) => {
+    evt.preventDefault();
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(`/${AppRoutes.Login}`);
+      return;
+    }
+    dispatch(changeFavoriteStatus({placeId, status: favoriteStatus}));
   };
 
   return (
@@ -68,6 +84,7 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
               'button'
             )}
             type="button"
+            onClick={(evt) => handleBookmarkButtonClick(evt, place.id, place.isFavorite ? 0 : 1)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

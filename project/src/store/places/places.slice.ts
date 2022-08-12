@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { Place } from '../../types/place';
-import { loadPlaces, loadPlaceById, loadNearestPlaces } from '../api-actions';
+import {
+  loadPlaces,
+  loadPlaceById,
+  loadNearestPlaces,
+  updatePlacesAction,
+} from '../api-actions';
 
 type InitialState = {
   places: Place[];
@@ -47,6 +52,13 @@ export const placesSlice = createSlice({
       })
       .addCase(loadPlaceById.pending, (state, action) => {
         state.isCurrentPlaceLoaded = false;
+      })
+      .addCase(updatePlacesAction.fulfilled, (state, action) => {
+        const place = action.payload;
+        const places = [...state.places];
+        const index = places.findIndex((pl) => pl.id === place.id);
+        places.splice(index, 1, place);
+        state.places = places;
       });
   },
 });

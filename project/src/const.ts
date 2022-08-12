@@ -58,7 +58,8 @@ export enum APIRoute {
   Places = '/hotels',
   Login = '/login',
   Logout = '/logout',
-  Comments = '/comments'
+  Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum NameSpace {

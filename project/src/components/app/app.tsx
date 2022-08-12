@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { AppRoutes, AuthorizationStatus, NameSpace } from '../../const';
+import { AppRoutes, NameSpace } from '../../const';
 import { Favorites } from '../../pages/favorites/favorites';
 import { Login } from '../../pages/login/login';
 import { Main } from '../../pages/main/main';
@@ -35,8 +35,8 @@ export const App: FC<AppProps> = ({ reviews, places }) => {
         <Route
           path={AppRoutes.Favorites}
           element={
-            <PrivateRoute authorization={AuthorizationStatus.Auth}>
-              <Favorites places={places} />
+            <PrivateRoute >
+              <Favorites />
             </PrivateRoute>
           }
         />

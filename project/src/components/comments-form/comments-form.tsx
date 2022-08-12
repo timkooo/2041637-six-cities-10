@@ -17,7 +17,7 @@ const ratingConfig = [
 
 const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
   const dispatch = useAppDispatch();
-  const [formDisableState, setFormDisableState] = useState<boolean>(false);
+  const [isFormDisabled, setIsFormDisabled] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<CommentData>({
     rating: '',
@@ -37,9 +37,9 @@ const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
 
   const handleFormSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    setFormDisableState(true);
+    setIsFormDisabled(true);
     await dispatch(postCommentAction({ formData, placeId }));
-    setFormDisableState(false);
+    setIsFormDisabled(false);
     setFormData({
       rating: '',
       comment: '',
@@ -57,22 +57,22 @@ const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {ratingConfig.map((rating) => (
-          <React.Fragment key={rating.rating}>
+        {ratingConfig.map(({rating, value}) => (
+          <React.Fragment key={rating}>
             <input
               className="form__rating-input visually-hidden"
-              checked={rating.rating === formData.rating}
+              checked={rating === formData.rating}
               name="rating"
-              value={rating.rating}
-              id={`${rating.rating}-stars`}
+              value={rating}
+              id={`${rating}-stars`}
               type="radio"
-              disabled={formDisableState}
+              disabled={isFormDisabled}
               onChange={handleFormChange}
             />
             <label
-              htmlFor={`${rating.rating}-stars`}
+              htmlFor={`${rating}-stars`}
               className="reviews__rating-label form__rating-label"
-              title={rating.value}
+              title={value}
             >
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>
@@ -88,7 +88,7 @@ const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
         value={formData.comment}
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleFormChange}
-        disabled={formDisableState}
+        disabled={isFormDisabled}
       >
       </textarea>
       <div className="reviews__button-wrapper">
