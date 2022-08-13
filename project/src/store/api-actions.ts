@@ -8,7 +8,7 @@ import { UserData } from '../types/user-data';
 import { redirectToRoute } from './action';
 import { Comment } from '../types/comment';
 import { CommentData } from '../types/comment-data';
-// import { updatePlacesAction } from './places/places.slice';
+import { updatePlacesAction } from './places/places.slice';
 
 export const loadPlaces = createAsyncThunk(
   `${NameSpace.Places}/loadPlaces`,
@@ -105,7 +105,7 @@ export const changeFavoriteStatus = createAsyncThunk(
   }
 );
 
-export const updatePlacesAction = createAsyncThunk(
-  `${NameSpace.Places}/updatePlacesAction`,
-  async (place: Place) => place
-);
+// export const updatePlacesAction = createAsyncThunk(
+//   `${NameSpace.Places}/updatePlacesAction`,
+//   async (place: Place) => place
+// );

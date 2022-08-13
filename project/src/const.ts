@@ -69,3 +69,8 @@ export enum NameSpace {
   Favorites = 'FAVORITES',
   User = 'USER',
 }
+
+export enum Favorite {
+  True = 1,
+  False = 0,
+}

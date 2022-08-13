@@ -6,7 +6,7 @@ import { RootState } from '../../types/store';
 export const selectFavorites = (state: RootState) => state[NameSpace.Favorites].favorites;
 export const selectAreFavoritesLoaded = (state: RootState) => state[NameSpace.Favorites].areFavoritesLoaded;
 export const selectFavoritesSorted = createSelector(selectFavorites, (favorites) => {
-  const sortedFavorites: Record<string, Place[]> = {
+  const sortedFavorites: Record<Cities, Place[]> = {
     [Cities.Paris] : [],
     [Cities.Cologne] : [],
     [Cities.Brussels] : [],
@@ -17,4 +17,4 @@ export const selectFavoritesSorted = createSelector(selectFavorites, (favorites)
   favorites.map((favorite) => sortedFavorites[favorite.city.name].push(favorite));
   return sortedFavorites;
 });
-export const selectFavoritesNumber = createSelector(selectFavorites, (favorites) => favorites.length);
+export const selectFavoritesNumber = (state: RootState) => state[NameSpace.Favorites].favorites.length;

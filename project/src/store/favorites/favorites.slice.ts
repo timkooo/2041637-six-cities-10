@@ -14,7 +14,7 @@ const initialState: InitialState = {
 };
 
 export const favoritesSlice = createSlice({
-  name: NameSpace.Places,
+  name: NameSpace.Favorites,
   initialState,
   reducers: {},
   extraReducers(builder) {
