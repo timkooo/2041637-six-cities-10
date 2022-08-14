@@ -1,11 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { Place } from '../../types/place';
+import { updatePlacesAction } from '../action';
 import {
   loadPlaces,
   loadPlaceById,
   loadNearestPlaces,
-  //  updatePlacesAction,
 } from '../api-actions';
 
 type InitialState = {
@@ -29,13 +29,7 @@ const initialState: InitialState = {
 export const placesSlice = createSlice({
   name: NameSpace.Places,
   initialState,
-  reducers: {
-    updatePlacesAction(state, action: PayloadAction<Place>) {
-      state.places = state.places.map((place) =>
-        place.id === action.payload.id ? action.payload : place
-      );
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(loadPlaces.fulfilled, (state, action) => {
@@ -58,13 +52,11 @@ export const placesSlice = createSlice({
       })
       .addCase(loadPlaceById.pending, (state, action) => {
         state.isCurrentPlaceLoaded = false;
+      })
+      .addCase(updatePlacesAction, (state, action) => {
+        state.places = state.places.map((place) =>
+          place.id === action.payload.id ? action.payload : place
+        );
       });
-    // .addCase(updatePlacesAction.fulfilled, (state, action) => {
-    //   state.places = state.places.map((place) =>
-    //     place.id === action.payload.id ? action.payload : place
-    //   );
-    // });
   },
 });
-
-export const { updatePlacesAction } = placesSlice.actions;

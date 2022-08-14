@@ -74,3 +74,9 @@ export enum Favorite {
   True = 1,
   False = 0,
 }
+
+export enum StatusCodeMapping {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}

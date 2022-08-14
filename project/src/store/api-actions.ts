@@ -5,10 +5,9 @@ import { api } from '../services/api';
 import { AuthData } from '../types/auth-data';
 import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
-import { redirectToRoute } from './action';
+import { redirectToRoute, updatePlacesAction } from './action';
 import { Comment } from '../types/comment';
 import { CommentData } from '../types/comment-data';
-import { updatePlacesAction } from './places/places.slice';
 
 export const loadPlaces = createAsyncThunk(
   `${NameSpace.Places}/loadPlaces`,
@@ -104,8 +103,3 @@ export const changeFavoriteStatus = createAsyncThunk(
     dispatch(loadFavorites());
   }
 );
-
-// export const updatePlacesAction = createAsyncThunk(
-//   `${NameSpace.Places}/updatePlacesAction`,
-//   async (place: Place) => place
-// );

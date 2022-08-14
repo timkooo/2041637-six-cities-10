@@ -6,7 +6,7 @@ import axios, {
 import { toast } from 'react-toastify';
 import { getToken } from './token';
 import history from '../browser-history';
-import { AppRoutes } from '../const';
+import { AppRoutes, StatusCodeMapping } from '../const';
 
 const SERVER_URL = 'https://10.react.pages.academy/six-cities';
 const TIMEOUT = 5000;
@@ -29,12 +29,12 @@ api.interceptors.request.use((config: AxiosRequestConfig) => {
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    if (error.response && error.response.status === 401) {
+    if (error.response && error.response.status === StatusCodeMapping.UNAUTHORIZED) {
       toast.warn(error.response.data.error, {
         toastId: 'authorization'
       });
     }
-    if (error.response && error.response.status === 404) {
+    if (error.response && error.response.status === StatusCodeMapping.NOT_FOUND) {
       history.replace(AppRoutes.PageNotFound);
     }
     throw error;
