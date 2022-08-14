@@ -29,7 +29,11 @@ const initialState: InitialState = {
 export const placesSlice = createSlice({
   name: NameSpace.Places,
   initialState,
-  reducers: {},
+  reducers: {
+    removeCurrentPlace (state) {
+      state.currentPlace = null;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(loadPlaces.fulfilled, (state, action) => {
@@ -57,6 +61,11 @@ export const placesSlice = createSlice({
         state.places = state.places.map((place) =>
           place.id === action.payload.id ? action.payload : place
         );
+        if (state.currentPlace?.id === action.payload.id) {
+          state.currentPlace = action.payload;
+        }
       });
   },
 });
+
+export const { removeCurrentPlace } = placesSlice.actions;

@@ -1,40 +1,38 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Header } from '../../components/header/header';
 import { Map } from '../../components/map/map';
 import { Places } from '../../components/places/places';
 import { CommentsList } from '../../components/comments-list/comments-list';
-import { AuthorizationStatus, htmlClasses, NameSpace } from '../../const';
+import { AppRoutes, AuthorizationStatus, Favorite, htmlClasses } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import {
   loadPlaceById,
   loadNearestPlaces,
   loadCommentsByPlaceId,
+  changeFavoriteStatus,
 } from '../../store/api-actions';
 import { getRating } from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { PageNotFound } from '../page-not-found/page-not-found';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import CommentsForm from '../../components/comments-form/comments-form';
+import classNames from 'classnames';
+import { FavoriteStatus } from '../../types/favorite-status';
+import { removeCurrentPlace } from '../../store/places/places.slice';
+import { selectAreNearestPlacesLoaded, selectCurrentPlace, selectIsCurrentPlaceLoaded, selectNearestPlaces } from '../../store/places/places.selectors';
 
 export const Room = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const currentPlace = useAppSelector(
-    (state) => state[NameSpace.Places].currentPlace
-  );
-  const isCurrentPlaceLoaded = useAppSelector(
-    (state) => state[NameSpace.Places].isCurrentPlaceLoaded
-  );
-  const nearestPlaces = useAppSelector(
-    (state) => state[NameSpace.Places].nearestPlaces
-  );
-  const areNearestPlacesLoaded = useAppSelector(
-    (state) => state[NameSpace.Places].areNearestPlacesLoaded
-  );
+  const currentPlace = useAppSelector(selectCurrentPlace);
+  const isCurrentPlaceLoaded = useAppSelector(selectIsCurrentPlaceLoaded);
+  const nearestPlaces = useAppSelector(selectNearestPlaces);
+  const areNearestPlacesLoaded = useAppSelector(selectAreNearestPlacesLoaded);
   const rating = currentPlace ? getRating(currentPlace.rating) : '0%';
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (params.id) {
@@ -42,7 +40,19 @@ export const Room = () => {
       dispatch(loadNearestPlaces(params.id));
       dispatch(loadCommentsByPlaceId(params.id));
     }
+    return () => {
+      dispatch(removeCurrentPlace);
+    };
   }, [dispatch, params.id]);
+
+  const handleBookmarkButtonClick = (evt: React.MouseEvent<HTMLButtonElement>, placeId: number, favoriteStatus: FavoriteStatus) => {
+    evt.preventDefault();
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(`/${AppRoutes.Login}`);
+      return;
+    }
+    dispatch(changeFavoriteStatus({placeId, status: favoriteStatus}));
+  };
 
   if (!isCurrentPlaceLoaded || !areNearestPlacesLoaded) {
     return <LoadingScreen />;
@@ -76,12 +86,9 @@ export const Room = () => {
               <div className="property__name-wrapper">
                 <h1 className="property__name">{currentPlace.description}</h1>
                 <button
-                  className={`property__bookmark-button ${
-                    currentPlace.isFavorite
-                      ? 'property__bookmark-button--active'
-                      : ''
-                  } button`}
+                  className={classNames('property__bookmark-button', {'property__bookmark-button--active' : currentPlace.isFavorite}, 'button')}
                   type="button"
+                  onClick={(evt) => handleBookmarkButtonClick(evt, currentPlace.id, currentPlace.isFavorite ? Favorite.False : Favorite.True)}
                 >
                   <svg
                     className="property__bookmark-icon"

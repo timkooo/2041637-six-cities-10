@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
@@ -8,7 +9,7 @@ import {
   selectUserData,
 } from '../../store/user/user.selectors';
 
-export const Header = () => {
+export const Header = memo(() => {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const favoritesNumber = useAppSelector(selectFavoritesNumber);
   const userData = useAppSelector(selectUserData);
@@ -43,7 +44,7 @@ export const Header = () => {
                     to={`/${AppRoutes.Login}`}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__login">Sign in</span>
+                    <span className="header__login">Log In</span>
                   </Link>
                 </li>
               </ul>
@@ -52,7 +53,8 @@ export const Header = () => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link to={`/${AppRoutes.Favorites}`}
+                  <Link
+                    to={`/${AppRoutes.Favorites}`}
                     className="header__nav-link header__nav-link--profile"
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper">
@@ -61,7 +63,9 @@ export const Header = () => {
                     <span className="header__user-name user__name">
                       {userData?.email}
                     </span>
-                    <span className="header__favorite-count">{favoritesNumber}</span>
+                    <span className="header__favorite-count">
+                      {favoritesNumber}
+                    </span>
                   </Link>
                 </li>
                 <li className="header__nav-item">
@@ -70,7 +74,7 @@ export const Header = () => {
                     style={{ cursor: 'pointer' }}
                     onClick={handleLogoutClick}
                   >
-                    Sign out
+                    Log Out
                   </span>
                 </li>
               </ul>
@@ -80,4 +84,6 @@ export const Header = () => {
       </div>
     </header>
   );
-};
+});
+
+Header.displayName = 'Header';

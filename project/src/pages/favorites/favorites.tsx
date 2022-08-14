@@ -3,7 +3,7 @@ import { Header } from '../../components/header/header';
 import { PlaceCard } from '../../components/place-card/place-card';
 import { AppRoutes, Cities } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/application/application.slice';
 import {
   selectFavorites,
   selectFavoritesSorted,
@@ -16,7 +16,8 @@ export const Favorites = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleOpenLocation = (city: Cities) => {
+  const handleOpenLocation = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent> ,city: Cities) => {
+    evt.preventDefault();
     navigate(AppRoutes.Main);
     dispatch(changeCity(city));
   };
@@ -51,8 +52,8 @@ export const Favorites = () => {
                       <li className="favorites__locations-items" key={location}>
                         <div className="favorites__locations locations locations--current">
                           <div className="locations__item">
-                            <a className="locations__item-link" href="#">
-                              <span onClick={() => handleOpenLocation(location as Cities)}>
+                            <a className="locations__item-link" onClick={(evt) => handleOpenLocation(evt, location as Cities)}>
+                              <span>
                                 {location}
                               </span>
                             </a>

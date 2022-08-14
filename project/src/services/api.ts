@@ -1,8 +1,4 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-} from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import { toast } from 'react-toastify';
 import { getToken } from './token';
 import history from '../browser-history';
@@ -29,13 +25,31 @@ api.interceptors.request.use((config: AxiosRequestConfig) => {
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    if (error.response && error.response.status === StatusCodeMapping.UNAUTHORIZED) {
-      toast.warn(error.response.data.error, {
-        toastId: 'authorization'
-      });
+    if (
+      error.response &&
+      error.response.status === StatusCodeMapping.UNAUTHORIZED
+    ) {
+      if (
+        error.response.config.url !== `/${AppRoutes.Login}`
+      ) {
+        toast.warn(error.response.data.error, {
+          toastId: 'authorization',
+        });
+      }
     }
-    if (error.response && error.response.status === StatusCodeMapping.NOT_FOUND) {
+    if (
+      error.response &&
+      error.response.status === StatusCodeMapping.NOT_FOUND
+    ) {
       history.replace(AppRoutes.PageNotFound);
+    }
+    if (
+      error.response &&
+      error.response.status === StatusCodeMapping.BAD_REQUEST
+    ) {
+      toast.warn(error.response.data.error, {
+        toastId: 'bad_request',
+      });
     }
     throw error;
   }

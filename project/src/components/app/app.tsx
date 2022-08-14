@@ -1,28 +1,35 @@
 import { Route, Routes } from 'react-router-dom';
-import { AppRoutes, NameSpace } from '../../const';
+import { AppRoutes, AuthorizationStatus } from '../../const';
 import { Favorites } from '../../pages/favorites/favorites';
 import { Login } from '../../pages/login/login';
 import { Main } from '../../pages/main/main';
 import { PageNotFound } from '../../pages/page-not-found/page-not-found';
 import { Room } from '../../pages/room/room';
 import { PrivateRoute } from '../private-route/private-route';
-import { Place } from '../../types/place';
-import { Comment } from '../../types/comment';
-import { FC } from 'react';
-import { useAppSelector } from '../../hooks/rtkHooks';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { HistoryRouter } from '../../history-router/history-router';
 import browserHistory from '../../browser-history';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
+import { selectArePlacesLoaded } from '../../store/places/places.selectors';
+import { checkAuthAction, loadFavorites, loadPlaces } from '../../store/api-actions';
 
-type AppProps = {
-  reviews?: Comment[];
-  places: Place[];
-};
+export const App = () => {
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const arePlacesLoaded = useAppSelector(selectArePlacesLoaded);
+  const dispatch = useAppDispatch();
 
-export const App: FC<AppProps> = ({ reviews, places }) => {
-  const arePlacesLoaded = useAppSelector(
-    (state) => state[NameSpace.Places].arePlacesLoaded
-  );
+  useEffect(() => {
+    dispatch(loadPlaces());
+    dispatch(checkAuthAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(loadFavorites());
+    }
+  }, [authorizationStatus, dispatch]);
 
   if (!arePlacesLoaded) {
     return <LoadingScreen />;
@@ -35,7 +42,7 @@ export const App: FC<AppProps> = ({ reviews, places }) => {
         <Route
           path={AppRoutes.Favorites}
           element={
-            <PrivateRoute >
+            <PrivateRoute>
               <Favorites />
             </PrivateRoute>
           }

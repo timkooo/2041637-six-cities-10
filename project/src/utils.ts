@@ -1,6 +1,7 @@
+import { Cities } from './const';
 import { Place } from './types/place';
 
-export const getRating = (rating: number): string => `${(rating / 5) * 100}%`;
+export const getRating = (rating: number): string => `${Math.round(rating) * 20}%`;
 
 export const getPlacesByCity = (city: string, places: Place[]) =>
   places.filter((place) => place.city.name === city);
@@ -43,3 +44,9 @@ export const formatDateDisplayValue = (date: string) =>
 
 export const formatDateAttribute = (date: string) =>
   new Date(date).toLocaleDateString('en-CA');
+
+export const getRandomLocation = () => {
+  const locations = Object.keys(Cities);
+
+  return locations[Math.floor(Math.random() * locations.length)] as Cities;
+};

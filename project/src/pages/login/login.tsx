@@ -1,26 +1,38 @@
 import { FormEvent, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { AppRoutes } from '../../const';
-import { useAppDispatch } from '../../hooks/rtkHooks';
+import { AppRoutes, AuthorizationStatus, Cities } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import { loginAction } from '../../store/api-actions';
+import { changeCity } from '../../store/application/application.slice';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import { AuthData } from '../../types/auth-data';
-
+import { getRandomLocation } from '../../utils';
 
 export const Login = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const randomLocation = getRandomLocation();
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+
+  const handleOpenLocation = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent> ,city: Cities) => {
+    evt.preventDefault();
+    navigate(AppRoutes.Main);
+    dispatch(changeCity(city));
+  };
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
+    navigate(AppRoutes.Main);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      if (!/^[a-zA-Z]+@[a-zA-Z]+\.[a-z]+$/.test(loginRef.current.value)) {
+      if (!/^\S+@\S+\.[a-zA-Z]+$/.test(loginRef.current.value)) {
         toast.warn('Login is not valid');
         return;
       }
@@ -35,7 +47,9 @@ export const Login = () => {
     }
   };
 
-  return (
+  return authorizationStatus !== AuthorizationStatus.NoAuth ? (
+    <Navigate to={AppRoutes.Main} />
+  ) : (
     <div className="page page--gray page--login">
       <header className="header">
         <div className="container">
@@ -97,8 +111,8 @@ export const Login = () => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
+              <a className="locations__item-link" onClick={(evt) => handleOpenLocation(evt, randomLocation)}>
+                <span>{randomLocation}</span>
               </a>
             </div>
           </section>
