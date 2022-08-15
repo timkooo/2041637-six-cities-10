@@ -32,6 +32,7 @@ export const placesSlice = createSlice({
   reducers: {
     removeCurrentPlace (state) {
       state.currentPlace = null;
+      state.isCurrentPlaceLoaded = false;
     }
   },
   extraReducers(builder) {

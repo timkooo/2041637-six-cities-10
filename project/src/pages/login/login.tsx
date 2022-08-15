@@ -32,7 +32,7 @@ export const Login = () => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      if (!/^\S+@\S+\.[a-zA-Z]+$/.test(loginRef.current.value)) {
+      if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(loginRef.current.value)) {
         toast.warn('Login is not valid');
         return;
       }

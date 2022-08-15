@@ -41,7 +41,7 @@ export const Room = () => {
       dispatch(loadCommentsByPlaceId(params.id));
     }
     return () => {
-      dispatch(removeCurrentPlace);
+      dispatch(removeCurrentPlace());
     };
   }, [dispatch, params.id]);
 
@@ -91,7 +91,7 @@ export const Room = () => {
                   onClick={(evt) => handleBookmarkButtonClick(evt, currentPlace.id, currentPlace.isFavorite ? Favorite.False : Favorite.True)}
                 >
                   <svg
-                    className="property__bookmark-icon"
+                    className={classNames('property__bookmark-icon', 'place-card__bookmark-icon')}
                     width="31"
                     height="33"
                   >
