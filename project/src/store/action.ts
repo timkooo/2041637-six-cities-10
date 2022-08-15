@@ -1,16 +1,11 @@
 import { createAction } from '@reduxjs/toolkit';
-import {AppRoutes} from '../const';
+import {AppRoutes, NameSpace} from '../const';
+import { Place } from '../types/place';
 
-export const changeCity = createAction('application/changeCity', (city) => ({
-  payload: {
-    currentCity: city,
-  }
-}));
+export const redirectToRoute = createAction<AppRoutes>(`${NameSpace.Application}/redirectToRoute`);
 
-export const changeSorting = createAction('application/changeСurrentSorting', (sorting) => ({
-  payload: {
-    currentSorting: sorting,
-  }
-}));
+export const updatePlacesAction = createAction<Place>(`${NameSpace.Places}/updatePlacesAction`);
 
-export const redirectToRoute = createAction<AppRoutes>('application/redirectToRoute');
+//export const removeCurrentPlaceAction = createAction<Place>(`${NameSpace.Places}/updatePlacesAction`);
+
+

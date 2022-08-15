@@ -5,7 +5,7 @@ import { api } from '../services/api';
 import { AuthData } from '../types/auth-data';
 import { dropToken, saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
-import { redirectToRoute } from './action';
+import { redirectToRoute, updatePlacesAction } from './action';
 import { Comment } from '../types/comment';
 import { CommentData } from '../types/comment-data';
 
@@ -73,8 +73,33 @@ export const loadCommentsByPlaceId = createAsyncThunk(
 
 export const postCommentAction = createAsyncThunk(
   `${NameSpace.Comments}/postComment`,
-  async ({formData, placeId} : {formData : CommentData, placeId: string}) => {
-    const { data } = await api.post<Comment[]>(`${APIRoute.Comments}/${placeId}`, formData);
+  async ({ formData, placeId }: { formData: CommentData; placeId: string }) => {
+    const { data } = await api.post<Comment[]>(
+      `${APIRoute.Comments}/${placeId}`,
+      formData
+    );
     return data;
+  }
+);
+
+export const loadFavorites = createAsyncThunk(
+  `${NameSpace.Favorites}/loadFavoritePlaces`,
+  async () => {
+    const { data } = await api.get<Place[]>(APIRoute.Favorite);
+    return data;
+  }
+);
+
+export const changeFavoriteStatus = createAsyncThunk(
+  `${NameSpace.Favorites}/changeFavoriteStatus`,
+  async (
+    { placeId, status }: { placeId: number; status: number },
+    { dispatch }
+  ) => {
+    const { data } = await api.post<Place>(
+      `${APIRoute.Favorite}/${placeId}/${status}`
+    );
+    dispatch(updatePlacesAction(data));
+    dispatch(loadFavorites());
   }
 );

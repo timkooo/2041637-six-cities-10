@@ -1,13 +1,15 @@
 import { FC, PropsWithChildren, ReactElement} from 'react';
-import { AuthorizationStatus } from '../../const';
-import { Login } from '../../pages/login/login';
+import { Navigate } from 'react-router-dom';
+import { AppRoutes, AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks/rtkHooks';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 
 type PrivateRouteProps = {
-  authorization: AuthorizationStatus;
   children: ReactElement;
 };
 
 export const PrivateRoute: FC<PropsWithChildren<PrivateRouteProps>> = (props) => {
-  const { authorization, children } = props;
-  return authorization === AuthorizationStatus.Auth ? children : <Login />;
+  const { children } = props;
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  return authorizationStatus === AuthorizationStatus.NoAuth ? <Navigate to={`/${AppRoutes.Login}`} /> : children;
 };

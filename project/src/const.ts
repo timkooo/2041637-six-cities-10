@@ -58,7 +58,8 @@ export enum APIRoute {
   Places = '/hotels',
   Login = '/login',
   Logout = '/logout',
-  Comments = '/comments'
+  Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum NameSpace {
@@ -67,4 +68,15 @@ export enum NameSpace {
   Places = 'PLACES',
   Favorites = 'FAVORITES',
   User = 'USER',
+}
+
+export enum Favorite {
+  True = 1,
+  False = 0,
+}
+
+export enum StatusCodeMapping {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
 }

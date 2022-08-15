@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, memo, useEffect, useRef } from 'react';
 import { Marker, Icon, LayerGroup } from 'leaflet';
 import { Place } from '../../types/place';
 import { useMap } from '../../hooks/useMap';
@@ -17,7 +17,7 @@ const currentCustomIcon = new Icon({
   iconUrl: '/img/pin-active.svg',
 });
 
-export const Map: FC<MapProps> = ({ places, currentPlace, selectedPlaceId }) => {
+export const Map: FC<MapProps> = memo(({ places, currentPlace, selectedPlaceId } : MapProps) => {
   const city = places[0].city;
   const mapRef = useRef<HTMLDivElement>(null);
   const map = useMap(mapRef, city);
@@ -85,5 +85,7 @@ export const Map: FC<MapProps> = ({ places, currentPlace, selectedPlaceId }) => 
     }
   }, [city, currentPlace, map]);
 
-  return <div style={{ height: '100%', width: '100%' }} ref={mapRef}></div>;
-};
+  return <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>;
+});
+
+Map.displayName = 'Map';

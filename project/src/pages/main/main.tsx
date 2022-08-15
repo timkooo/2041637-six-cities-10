@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { Places } from '../../components/places/places';
 import { Map } from '../../components/map/map';
-import { Cities, htmlClasses, NameSpace } from '../../const';
+import { Cities, htmlClasses } from '../../const';
 import { Link } from 'react-router-dom';
 import { changeCity } from '../../store/application/application.slice';
 import { useAppSelector, useAppDispatch } from '../../hooks/rtkHooks';
 import { selectCurrentPlaces } from '../../store/places/places.selectors';
-import { selectCurrentSorting } from '../../store/application/application.selectors';
+import { selectCurrentCity, selectCurrentSorting } from '../../store/application/application.selectors';
 import { Sorting } from '../../components/sorting/sorting';
 import { Header } from '../../components/header/header';
+import classNames from 'classnames';
 
 export const Main = () => {
-  const currentCity = useAppSelector((state) => state[NameSpace.Application].currentCity);
+  const currentCity = useAppSelector(selectCurrentCity);
   const currentPlaces = useAppSelector(selectCurrentPlaces);
   const currentSorting = useAppSelector(selectCurrentSorting);
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
@@ -33,7 +34,7 @@ export const Main = () => {
             <ul className="locations__list tabs__list">
               {Object.values(Cities).map((city) => (
                 <li key={city} className="locations__item">
-                  <Link className="locations__item-link tabs__item" to="#">
+                  <Link className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': city === currentCity})} to="#">
                     <span onClick={() => handleCityChange(city)}>{city}</span>
                   </Link>
                 </li>
