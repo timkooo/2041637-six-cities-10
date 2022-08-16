@@ -6,10 +6,6 @@ import { store } from './store/store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// store.dispatch(loadPlaces());
-// store.dispatch(checkAuthAction());
-//store.dispatch(loadFavorites());
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

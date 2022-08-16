@@ -5,7 +5,3 @@ import { Place } from '../types/place';
 export const redirectToRoute = createAction<AppRoutes>(`${NameSpace.Application}/redirectToRoute`);
 
 export const updatePlacesAction = createAction<Place>(`${NameSpace.Places}/updatePlacesAction`);
-
-//export const removeCurrentPlaceAction = createAction<Place>(`${NameSpace.Places}/updatePlacesAction`);
-
-
