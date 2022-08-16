@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Places } from '../../components/places/places';
 import { Map } from '../../components/map/map';
 import { Cities, htmlClasses } from '../../const';
-import { Link } from 'react-router-dom';
 import { changeCity } from '../../store/application/application.slice';
 import { useAppSelector, useAppDispatch } from '../../hooks/rtkHooks';
 import { selectCurrentPlaces } from '../../store/places/places.selectors';
@@ -34,9 +33,9 @@ export const Main = () => {
             <ul className="locations__list tabs__list">
               {Object.values(Cities).map((city) => (
                 <li key={city} className="locations__item">
-                  <Link className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': city === currentCity})} to="#">
-                    <span onClick={() => handleCityChange(city)}>{city}</span>
-                  </Link>
+                  <a className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': city === currentCity})} onClick={() => handleCityChange(city)}>
+                    <span>{city}</span>
+                  </a>
                 </li>
               ))}
             </ul>
