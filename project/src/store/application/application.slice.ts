@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Cities, NameSpace, SortingTypes } from '../../const';
 
-type InitialState = {
+export type InitialState = {
   currentCity: Cities;
   currentSorting: SortingTypes;
 };
