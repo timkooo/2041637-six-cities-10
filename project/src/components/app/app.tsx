@@ -9,11 +9,13 @@ import { PrivateRoute } from '../private-route/private-route';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import { HistoryRouter } from '../../history-router/history-router';
-import browserHistory from '../../browser-history';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import { selectArePlacesLoaded } from '../../store/places/places.selectors';
-import { checkAuthAction, loadFavorites, loadPlaces } from '../../store/api-actions';
+import {
+  checkAuthAction,
+  loadFavorites,
+  loadPlaces,
+} from '../../store/api-actions';
 
 export const App = () => {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
@@ -36,21 +38,19 @@ export const App = () => {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route path={AppRoutes.Main} element={<Main />} />
-        <Route
-          path={AppRoutes.Favorites}
-          element={
-            <PrivateRoute>
-              <Favorites />
-            </PrivateRoute>
-          }
-        />
-        <Route path={AppRoutes.Login} element={<Login />} />
-        <Route path={AppRoutes.Room} element={<Room />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </HistoryRouter>
+    <Routes>
+      <Route path={AppRoutes.Main} element={<Main />} />
+      <Route
+        path={AppRoutes.Favorites}
+        element={
+          <PrivateRoute>
+            <Favorites />
+          </PrivateRoute>
+        }
+      />
+      <Route path={AppRoutes.Login} element={<Login />} />
+      <Route path={AppRoutes.Room} element={<Room />} />
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
   );
 };

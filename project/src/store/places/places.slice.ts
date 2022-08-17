@@ -8,7 +8,7 @@ import {
   loadNearestPlaces,
 } from '../api-actions';
 
-type InitialState = {
+export type InitialState = {
   places: Place[];
   arePlacesLoaded: boolean;
   nearestPlaces: Place[];
