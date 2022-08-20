@@ -1,7 +1,8 @@
+/* eslint-disable no-trailing-spaces */
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { configureMockStore } from '@jedmao/redux-mock-store';
+import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
 import { HistoryRouter } from '../../history-router/history-router';
 import {
   AuthorizationStatus,
@@ -11,24 +12,19 @@ import {
   NameSpace,
 } from '../../const';
 import { App } from './app';
-import { makeFakeComments, makeFakePlaces, makeFakeUserData } from '../../utils/mocks';
+import {
+  makeFakeComments,
+  makeFakePlaces,
+  makeFakeUserData,
+} from '../../utils/mocks';
+import thunk from 'redux-thunk';
+import { AnyAction } from '@reduxjs/toolkit';
 
-const mockStore = configureMockStore();
-
-const store = mockStore({
-  [NameSpace.Application]: {
-    currentCity: Cities.Paris,
-    currentSorting: SortingTypes.Popular,
-  },
-  [NameSpace.Comments]: { areCommentsLoaded: true, comments: makeFakeComments() },
-  [NameSpace.Places]: { arePlacesLoaded: true, places: makeFakePlaces() },
-  [NameSpace.Favorites]: { areFavoritesLoaded: true, favorites: makeFakePlaces() },
-  [NameSpace.User]: { authorizationStatus: AuthorizationStatus.Auth, userData: makeFakeUserData() },
-});
+const mockStore = configureMockStore([thunk]);
 
 const history = createMemoryHistory();
 
-const fakeApp = (
+const buildFakeApp = (store: MockStore<any, AnyAction>) => (
   <Provider store={store}>
     <HistoryRouter history={history}>
       <App />
@@ -37,52 +33,211 @@ const fakeApp = (
 );
 
 describe('Application Routing', () => {
-  it('should render "WelcomeScreen" when user navigate to "/"', () => {
+  it('should render "Main" when user navigate to "/"', () => {
+    const store = mockStore({
+      [NameSpace.Application]: {
+        currentCity: Cities.Paris,
+        currentSorting: SortingTypes.Popular,
+      },
+      [NameSpace.Comments]: {
+        areCommentsLoaded: true,
+        comments: makeFakeComments(),
+      },
+      [NameSpace.Places]: { arePlacesLoaded: true, places: makeFakePlaces() },
+      [NameSpace.Favorites]: {
+        areFavoritesLoaded: true,
+        favorites: makeFakePlaces(),
+      },
+      [NameSpace.User]: {
+        authorizationStatus: AuthorizationStatus.Auth,
+        userData: makeFakeUserData(),
+      },
+    });
+
     history.push(AppRoutes.Main);
 
-    render(fakeApp);
+    render(buildFakeApp(store));
 
     expect(screen.getByText(/places to stay/i)).toBeInTheDocument();
-    //expect(screen.getByText(new RegExp(`Можно допустить ${MAX_MISTAKE_COUNT}`, 'i'))).toBeInTheDocument();
   });
 
-  // it('should render "AuthScreen" when user navigate to "/login"', () => {
-  //   history.push(AppRoutes.Login);
+  it('should render "Main" when user navigate to "/login" and authorized', () => {
+    const store = mockStore({
+      [NameSpace.Application]: {
+        currentCity: Cities.Paris,
+        currentSorting: SortingTypes.Popular,
+      },
+      [NameSpace.Comments]: {
+        areCommentsLoaded: true,
+        comments: makeFakeComments(),
+      },
+      [NameSpace.Places]: { arePlacesLoaded: true, places: makeFakePlaces() },
+      [NameSpace.Favorites]: {
+        areFavoritesLoaded: true,
+        favorites: makeFakePlaces(),
+      },
+      [NameSpace.User]: {
+        authorizationStatus: AuthorizationStatus.Auth,
+        userData: makeFakeUserData(),
+      },
+    });
+    
+    history.push(`/${AppRoutes.Login}`);
 
-  //   render(fakeApp);
+    render(buildFakeApp(store));
 
-  //   expect(screen.getByText(/Сыграть ещё раз/i)).toBeInTheDocument();
-  //   expect(screen.getByText(/Хотите узнать свой результат\? Представьтесь!/i)).toBeInTheDocument();
-  //   expect(screen.getByLabelText(/Логин/i)).toBeInTheDocument();
-  //   expect(screen.getByLabelText(/Пароль/i)).toBeInTheDocument();
-  // });
+    expect(screen.getByText(/places to stay/i)).toBeInTheDocument();
+  });
 
-  // it('should render "WinScreen" when user navigate to "/result"', () => {
-  //   history.push(AppRoutes.Result);
+  it('should render "AuthScreen" when user navigate to "/login" and not authorized', () => {
+    const store = mockStore({
+      [NameSpace.Application]: {
+        currentCity: Cities.Paris,
+        currentSorting: SortingTypes.Popular,
+      },
+      [NameSpace.Comments]: {
+        areCommentsLoaded: true,
+        comments: makeFakeComments(),
+      },
+      [NameSpace.Places]: { arePlacesLoaded: true, places: makeFakePlaces() },
+      [NameSpace.Favorites]: {
+        areFavoritesLoaded: true,
+        favorites: makeFakePlaces(),
+      },
+      [NameSpace.User]: {
+        authorizationStatus: AuthorizationStatus.NoAuth,
+        userData: null,
+      },
+    });
+    
+    history.push(`/${AppRoutes.Login}`);
 
-  //   render(fakeApp);
+    render(buildFakeApp(store));
 
-  //   expect(screen.getByText(/Вы настоящий меломан!/i)).toBeInTheDocument();
-  //   expect(screen.getByText(/Вы ответили правильно на 8 вопросов/i)).toBeInTheDocument();
-  //   expect(screen.getByText(/Сыграть ещё раз/i)).toBeInTheDocument();
-  // });
+    expect(screen.getByText(/E-mail/i)).toBeInTheDocument();
+    expect(screen.getByText(/Password/i)).toBeInTheDocument();
+  });
 
-  // it('should render "GameOverScreen" when user navigate to "/lose"', () => {
-  //   history.push(AppRoutes.Lose);
+  it('should render "Favorites" when user navigate to "/favorites" and authorized', () => {
+    const store = mockStore({
+      [NameSpace.Application]: {
+        currentCity: Cities.Paris,
+        currentSorting: SortingTypes.Popular,
+      },
+      [NameSpace.Comments]: {
+        areCommentsLoaded: true,
+        comments: makeFakeComments(),
+      },
+      [NameSpace.Places]: { arePlacesLoaded: true, places: makeFakePlaces() },
+      [NameSpace.Favorites]: {
+        areFavoritesLoaded: true,
+        favorites: makeFakePlaces(),
+      },
+      [NameSpace.User]: {
+        authorizationStatus: AuthorizationStatus.Auth,
+        userData: makeFakeUserData(),
+      },
+    });
 
-  //   render(fakeApp);
+    history.push(`/${AppRoutes.Favorites}`);
 
-  //   expect(screen.getByText(/Какая жалость!/i)).toBeInTheDocument();
-  //   expect(screen.getByText(/Попробовать ещё раз/i)).toBeInTheDocument();
-  //   expect(screen.getByText(/У вас закончились все попытки. Ничего, повезёт в следующий раз!/i)).toBeInTheDocument();
-  // });
+    render(buildFakeApp(store));
 
-  // it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
-  //   history.push('/non-existent-route');
+    expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
+  });
 
-  //   render(fakeApp);
+  it('should render "Login" when user navigate to "/favorites" and not authorized', () => {
+    const store = mockStore({
+      [NameSpace.Application]: {
+        currentCity: Cities.Paris,
+        currentSorting: SortingTypes.Popular,
+      },
+      [NameSpace.Comments]: {
+        areCommentsLoaded: true,
+        comments: makeFakeComments(),
+      },
+      [NameSpace.Places]: { arePlacesLoaded: true, places: makeFakePlaces() },
+      [NameSpace.Favorites]: {
+        areFavoritesLoaded: true,
+        favorites: makeFakePlaces(),
+      },
+      [NameSpace.User]: {
+        authorizationStatus: AuthorizationStatus.NoAuth,
+        userData: null,
+      },
+    });
 
-  //   expect(screen.getByText('404. Page not found')).toBeInTheDocument();
-  //   expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
-  // });
+    history.push(`/${AppRoutes.Favorites}`);
+
+    render(buildFakeApp(store));
+
+    expect(screen.getByText(/E-mail/i)).toBeInTheDocument();
+    expect(screen.getByText(/Password/i)).toBeInTheDocument();
+  });
+
+  it('should render "Room" when user navigate to "/room/:id"', () => {
+    const places = makeFakePlaces();
+    const currentPlace = places[0];
+    const placeId = currentPlace.id;
+    const store = mockStore({
+      [NameSpace.Application]: {
+        currentCity: Cities.Paris,
+        currentSorting: SortingTypes.Popular,
+      },
+      [NameSpace.Comments]: {
+        areCommentsLoaded: true,
+        comments: makeFakeComments(),
+      },
+      [NameSpace.Places]: { arePlacesLoaded: true, places: places,
+        isCurrentPlaceLoaded: true,
+        areNearestPlacesLoaded: true,
+        currentPlace: currentPlace,
+        nearestPlaces: places,
+      },
+      [NameSpace.Favorites]: {
+        areFavoritesLoaded: true,
+        favorites: places,
+      },
+      [NameSpace.User]: {
+        authorizationStatus: AuthorizationStatus.Auth,
+        userData: makeFakeUserData(),
+      },
+    });
+
+    history.push(`/offer/${placeId}`);
+
+    render(buildFakeApp(store));
+
+    expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
+    expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
+  });
+
+  it('should render "PageNotFound" when user navigate to non-existent route', () => {
+    const store = mockStore({
+      [NameSpace.Application]: {
+        currentCity: Cities.Paris,
+        currentSorting: SortingTypes.Popular,
+      },
+      [NameSpace.Comments]: {
+        areCommentsLoaded: true,
+        comments: makeFakeComments(),
+      },
+      [NameSpace.Places]: { arePlacesLoaded: true, places: makeFakePlaces() },
+      [NameSpace.Favorites]: {
+        areFavoritesLoaded: true,
+        favorites: makeFakePlaces(),
+      },
+      [NameSpace.User]: {
+        authorizationStatus: AuthorizationStatus.NoAuth,
+        userData: null,
+      },
+    });
+    
+    history.push('/non-existent-route');
+
+    render(buildFakeApp(store));
+
+    expect(screen.getByText('404. Page not found')).toBeInTheDocument();
+    expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
+  });
 });

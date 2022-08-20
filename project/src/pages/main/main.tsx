@@ -33,7 +33,7 @@ export const Main = () => {
             <ul className="locations__list tabs__list">
               {Object.values(Cities).map((city) => (
                 <li key={city} className="locations__item">
-                  <a className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': city === currentCity})} onClick={() => handleCityChange(city)}>
+                  <a className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': city === currentCity})} onClick={() => handleCityChange(city)} data-testid="location">
                     <span>{city}</span>
                   </a>
                 </li>

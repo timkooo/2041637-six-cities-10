@@ -85,7 +85,7 @@ export const Map: FC<MapProps> = memo(({ places, currentPlace, selectedPlaceId }
     }
   }, [city, currentPlace, map]);
 
-  return <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>;
+  return <div ref={mapRef} style={{ height: '100%', width: '100%' }} data-testid="map_component"></div>;
 });
 
 Map.displayName = 'Map';

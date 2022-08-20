@@ -58,6 +58,7 @@ export const Room = () => {
     return <LoadingScreen />;
   }
 
+  //if (!currentPlace /*|| !params.id*/) {
   if (!currentPlace || !params.id) {
     return <PageNotFound />;
   }

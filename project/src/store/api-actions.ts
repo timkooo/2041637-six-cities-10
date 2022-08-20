@@ -83,7 +83,7 @@ export const postCommentAction = createAsyncThunk(
 );
 
 export const loadFavorites = createAsyncThunk(
-  `${NameSpace.Favorites}/loadFavoritePlaces`,
+  `${NameSpace.Favorites}/loadFavorites`,
   async () => {
     const { data } = await api.get<Place[]>(APIRoute.Favorite);
     return data;

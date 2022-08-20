@@ -3,14 +3,14 @@ import { Cities } from '../const';
 
 export const makeFakeComment = () => ({
   comment: lorem.text(),
-  date: datatype.datetime(),
+  date: datatype.string(),
   id: datatype.number(),
   rating: datatype.number(),
   user: {
     avatarUrl: internet.avatar(),
     id: datatype.number(),
-    isPro: datatype.boolean,
-    name: internet.userName,
+    isPro: datatype.boolean(),
+    name: internet.userName(),
   },
 });
 
@@ -62,4 +62,13 @@ export const makeFakeUserData = () => ({
   isPro: datatype.boolean(),
   name: datatype.string(),
   token: datatype.string(),
+});
+
+export const makeFakeCity = () => ({
+  location: {
+    latitude: datatype.number(),
+    longitude: datatype.number(),
+    zoom: datatype.number(),
+  },
+  name: Cities.Amsterdam,
 });

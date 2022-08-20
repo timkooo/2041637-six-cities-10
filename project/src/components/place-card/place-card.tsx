@@ -56,6 +56,7 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
       className={`${rootPlaceCardClass} place-card`}
       onMouseOver={handleOnMouseOver}
       onMouseLeave={handleOnMouseLeave}
+      data-testid="place_card"
     >
       {place.isPremium && (
         <div className="place-card__mark">
@@ -87,6 +88,7 @@ export const PlaceCard: FC<PlaceCardProps> = (props) => {
             )}
             type="button"
             onClick={(evt) => handleBookmarkButtonClick(evt, place.id, place.isFavorite ? Favorite.False : Favorite.True)}
+            data-testid="bookmark_button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
