@@ -28,7 +28,7 @@ export const makeFakePlace = () => ({
     name: Cities.Amsterdam,
   },
   description: lorem.text(),
-  goods: new Array(5).fill(null).map(() => lorem.word()),
+  goods: new Array(5).fill(null).map((good, index) => lorem.word() + index),
   host: {
     avatarUrl: internet.url(),
     id: datatype.number(),
