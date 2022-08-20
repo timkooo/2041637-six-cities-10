@@ -19,7 +19,6 @@ describe('Component: Room', () => {
     const history = createMemoryHistory();
     const places = makeFakePlaces();
     const currentPlace = makeFakePlace();
-    //const placeId = currentPlace.id;
     currentPlace.id = 1;
     const store = mockStore({
       [NameSpace.Application]: {
@@ -48,7 +47,6 @@ describe('Component: Room', () => {
       },
     });
 
-    // history.push(`/offer/${placeId}`);
     history.push('/offer/1');
 
     render(
