@@ -13,6 +13,7 @@
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.1",
+    "react-test-renderer": "^18.2.0",
     "react-toastify": "9.0.8",
     "reselect": "^4.0.0"
   },
@@ -43,6 +44,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-typescript": "^7.18.6",
     "@jedmao/redux-mock-store": "^3.0.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -55,9 +59,12 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-redux": "^7.1.24",
     "axios-mock-adapter": "^1.19.0",
+    "babel-jest": "^28.1.3",
     "eslint-config-htmlacademy": "^6.0.0",
     "faker": "^5.5.3",
     "redux-devtools-extension": "2.13",
+    "ts-jest": "^28.0.8",
     "typescript": "^4.7.4"
   }
+
 }

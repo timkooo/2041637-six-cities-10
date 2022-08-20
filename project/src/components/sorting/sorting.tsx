@@ -62,6 +62,7 @@ export const Sorting: FC<SortingProps> = ({ currentSorting }) => {
             className={classNames('places__option', {'places__option--active' : currentSorting === option.type})}
             onClick={() => handleSelectedSorting(option.type)}
             tabIndex={0}
+            data-testid="sorting_option"
           >
             {option.label}
           </li>

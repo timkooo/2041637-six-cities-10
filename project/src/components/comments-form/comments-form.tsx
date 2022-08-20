@@ -89,6 +89,7 @@ const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleFormChange}
         disabled={isFormDisabled}
+        data-testid="textarea"
       >
       </textarea>
       <div className="reviews__button-wrapper">
