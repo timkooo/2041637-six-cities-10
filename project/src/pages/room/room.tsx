@@ -58,8 +58,7 @@ export const Room = () => {
     return <LoadingScreen />;
   }
 
-  if (!currentPlace /*|| !params.id*/) {
-  //if (!currentPlace || !params.id) {
+  if (!currentPlace) {
     return <PageNotFound />;
   }
 
@@ -167,7 +166,7 @@ export const Room = () => {
               <section className="property__reviews reviews">
                 <CommentsList />
                 {authorizationStatus === AuthorizationStatus.Auth && (
-                  <CommentsForm id={params.id} />
+                  <CommentsForm id={currentPlace.id.toString()} />
                 )}
               </section>
             </div>
