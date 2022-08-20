@@ -1,4 +1,3 @@
-/* eslint-disable no-trailing-spaces */
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
@@ -81,7 +80,7 @@ describe('Application Routing', () => {
         userData: makeFakeUserData(),
       },
     });
-    
+
     history.push(`/${AppRoutes.Login}`);
 
     render(buildFakeApp(store));
@@ -109,7 +108,7 @@ describe('Application Routing', () => {
         userData: null,
       },
     });
-    
+
     history.push(`/${AppRoutes.Login}`);
 
     render(buildFakeApp(store));
@@ -232,7 +231,7 @@ describe('Application Routing', () => {
         userData: null,
       },
     });
-    
+
     history.push('/non-existent-route');
 
     render(buildFakeApp(store));
