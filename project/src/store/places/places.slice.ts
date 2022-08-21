@@ -44,6 +44,10 @@ export const placesSlice = createSlice({
       .addCase(loadPlaces.pending, (state, action) => {
         state.arePlacesLoaded = false;
       })
+      .addCase(loadPlaces.rejected, (state, action) => {
+        state.arePlacesLoaded = true;
+        state.places = [];
+      })
       .addCase(loadNearestPlaces.fulfilled, (state, action) => {
         state.nearestPlaces = action.payload;
         state.areNearestPlacesLoaded = true;

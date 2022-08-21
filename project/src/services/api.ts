@@ -2,9 +2,9 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import { toast } from 'react-toastify';
 import { getToken } from './token';
 import history from '../browser-history';
-import { AppRoutes, StatusCodeMapping } from '../const';
+import { APIRoute, AppRoutes, StatusCodeMapping } from '../const';
 
-const SERVER_URL = 'https://10.react.pages.academy/six-cities';
+const SERVER_URL = 'https://10.react.pages.academy/six-citiess';
 const TIMEOUT = 5000;
 
 export const api: AxiosInstance = axios.create({
@@ -41,7 +41,17 @@ api.interceptors.response.use(
       error.response &&
       error.response.status === StatusCodeMapping.NOT_FOUND
     ) {
-      history.replace(AppRoutes.PageNotFound);
+      if (
+        error.response.config.url !== APIRoute.Places &&
+        error.response.config.url !== APIRoute.Login
+      ) {
+        history.replace(AppRoutes.PageNotFound);
+      }
+      if (error.response.config.url === APIRoute.Places) {
+        toast.warn('Не удалось получить данные от сервера', {
+          toastId: 'bad_request',
+        });
+      }
     }
     if (
       error.response &&

@@ -23,7 +23,6 @@ export const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadPlaces());
     dispatch(checkAuthAction());
   }, [dispatch]);
 
@@ -31,6 +30,7 @@ export const App = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(loadFavorites());
     }
+    dispatch(loadPlaces());
   }, [authorizationStatus, dispatch]);
 
   if (!arePlacesLoaded) {

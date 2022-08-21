@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useAppDispatch } from '../../hooks/rtkHooks';
 import { postCommentAction } from '../../store/api-actions';
 import { CommentData } from '../../types/comment-data';
@@ -37,6 +38,10 @@ const CommentsForm: FC<CommentsFormProps> = ({ id: placeId }) => {
 
   const handleFormSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    if (formData.comment.length < 50 || formData.comment.length > 300) {
+      toast.warn('Длина комментария должна быть от 50 до 300 символов');
+      return;
+    }
     setIsFormDisabled(true);
     await dispatch(postCommentAction({ formData, placeId }));
     setIsFormDisabled(false);
