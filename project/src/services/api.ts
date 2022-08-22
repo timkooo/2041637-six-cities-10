@@ -4,7 +4,7 @@ import { getToken } from './token';
 import history from '../browser-history';
 import { APIRoute, AppRoutes, StatusCodeMapping } from '../const';
 
-const SERVER_URL = 'https://10.react.pages.academy/six-citiess';
+const SERVER_URL = 'https://10.react.pages.academy/six-cities';
 const TIMEOUT = 5000;
 
 export const api: AxiosInstance = axios.create({
